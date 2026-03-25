@@ -1,0 +1,72 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cane-personality"
+version = "0.1.0"
+description = "Behavioral profiling benchmark for LLMs. Profile any model's personality, extract steering vectors, generate DPO training pairs."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Cane" },
+]
+keywords = [
+    "llm", "personality", "behavioral-profiling", "steering-vectors",
+    "dpo", "post-training", "calibration", "overconfidence",
+    "embedding-analysis", "benchmark", "ai-safety",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "pyyaml>=6.0",
+    "numpy>=1.24.0",
+]
+
+[project.optional-dependencies]
+anthropic = ["anthropic>=0.39.0"]
+openai = ["openai>=1.0.0"]
+embeddings = ["sentence-transformers>=2.2.0"]
+umap = ["umap-learn>=0.5.0"]
+all = [
+    "anthropic>=0.39.0",
+    "openai>=1.0.0",
+    "sentence-transformers>=2.2.0",
+]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.1.0",
+]
+
+[project.scripts]
+cane-personality = "cane_personality.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/colingfly/cane-personality"
+Repository = "https://github.com/colingfly/cane-personality"
+Issues = "https://github.com/colingfly/cane-personality/issues"
+
+[tool.hatch.build]
+include = ["cane_personality/**", "baselines/**"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

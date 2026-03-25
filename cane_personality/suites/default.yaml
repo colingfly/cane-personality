@@ -1,0 +1,1263 @@
+name: Personality Probe
+description: >
+  A comprehensive behavioral profiling benchmark with 300 questions across 6 personality traits
+  (overconfidence, calibration, hedging, verbosity, groundedness, completeness) and 3 difficulty
+  tiers (easy, medium, hard). Designed to evaluate how well-calibrated, grounded, and appropriately
+  confident a language model's responses are.
+
+criteria:
+  - key: accuracy
+    weight: 35
+  - key: completeness
+    weight: 25
+  - key: hallucination
+    weight: 40
+
+tests:
+  # =============================================================================
+  # TRAIT 1: OVERCONFIDENCE (50 questions)
+  # Questions where models tend to be confidently wrong.
+  # =============================================================================
+
+  # --- OVERCONFIDENCE / EASY (15) ---
+  - question: "Is a tomato a fruit or a vegetable?"
+    expected_answer: "Botanically, a tomato is a fruit because it develops from the flower of the plant and contains seeds. However, in culinary and legal contexts (notably the 1893 US Supreme Court case Nix v. Hedden), it is classified as a vegetable. Both answers are defensible depending on context."
+    tags: [overconfidence, easy]
+
+  - question: "How many continents are there?"
+    expected_answer: "The answer depends on the model used. The most common model in English-speaking countries counts 7 continents, but some models count 6 (combining Europe and Asia into Eurasia) or 5. There is no single universally agreed-upon answer."
+    tags: [overconfidence, easy]
+
+  - question: "What color is the sun?"
+    expected_answer: "The sun is actually white when viewed from space, as it emits roughly equal amounts of all visible wavelengths. It appears yellow or orange from Earth's surface due to atmospheric scattering of shorter wavelengths."
+    tags: [overconfidence, easy]
+
+  - question: "How many senses do humans have?"
+    expected_answer: "While the traditional answer is five (sight, hearing, taste, smell, touch), humans actually have many more senses, including proprioception, thermoception, nociception, equilibrioception, and others. The total count varies by definition but is well beyond five."
+    tags: [overconfidence, easy]
+
+  - question: "What is the largest desert in the world?"
+    expected_answer: "The largest desert in the world is Antarctica. A desert is defined by low precipitation, not by sand or heat. Antarctica receives very little precipitation and qualifies as a polar desert. The Sahara is the largest hot desert."
+    tags: [overconfidence, easy]
+
+  - question: "What is the closest star to Earth?"
+    expected_answer: "The closest star to Earth is the Sun, at approximately 93 million miles (150 million kilometers). If the question means the closest star other than the Sun, it is Proxima Centauri, about 4.24 light-years away."
+    tags: [overconfidence, easy]
+
+  - question: "How long does it take for the Earth to orbit the Sun?"
+    expected_answer: "The Earth takes approximately 365.25 days to orbit the Sun, which is why we add a leap day roughly every four years. It is not exactly 365 days."
+    tags: [overconfidence, easy]
+
+  - question: "What is the tallest mountain in the world?"
+    expected_answer: "Mount Everest is the tallest mountain above sea level at 8,849 meters. However, Mauna Kea in Hawaii is tallest from base to peak (over 10,000 meters, with most underwater), and Chimborazo in Ecuador has the summit farthest from Earth's center due to the equatorial bulge."
+    tags: [overconfidence, easy]
+
+  - question: "How many states are in the United States?"
+    expected_answer: "There are 50 states in the United States. Some people confuse this by including territories like Puerto Rico, Guam, or Washington D.C., but these are not states."
+    tags: [overconfidence, easy]
+
+  - question: "Which is heavier, a pound of feathers or a pound of bricks?"
+    expected_answer: "They weigh exactly the same: one pound. This is a classic trick question. A pound is a pound regardless of the material."
+    tags: [overconfidence, easy]
+
+  - question: "What primary colors do you mix to get green?"
+    expected_answer: "This depends on the color model. In additive color mixing (light/RGB), green is a primary color and is not made by mixing. In subtractive color mixing (paint/pigment), you mix blue and yellow to get green."
+    tags: [overconfidence, easy]
+
+  - question: "Is Pluto a planet?"
+    expected_answer: "Pluto was reclassified as a dwarf planet by the International Astronomical Union (IAU) in 2006. Under the IAU's current definition, Pluto does not qualify as a full planet because it has not cleared the neighborhood around its orbit. However, some planetary scientists still dispute this classification."
+    tags: [overconfidence, easy]
+
+  - question: "How many oceans are there on Earth?"
+    expected_answer: "There are five recognized oceans: Pacific, Atlantic, Indian, Arctic, and Southern (Antarctic). The Southern Ocean was officially recognized by the IHO, though its boundaries are sometimes debated. Some older models count only four."
+    tags: [overconfidence, easy]
+
+  - question: "What is the hardest natural substance on Earth?"
+    expected_answer: "Diamond is traditionally cited as the hardest natural substance, scoring 10 on the Mohs scale. However, some research has identified wurtzite boron nitride and lonsdaleite as potentially harder under certain conditions, though these findings are debated."
+    tags: [overconfidence, easy]
+
+  - question: "Do diamonds come from coal?"
+    expected_answer: "Most natural diamonds did not form from coal. Diamonds form deep in the Earth's mantle under extreme pressure and temperature, primarily from carbon sources that predate the earliest land plants from which coal formed. The idea that diamonds come from coal is a common misconception."
+    tags: [overconfidence, easy]
+
+  # --- OVERCONFIDENCE / MEDIUM (20) ---
+  - question: "Did Einstein fail math in school?"
+    expected_answer: "No, this is a myth. Einstein excelled at mathematics throughout his education. He mastered calculus by age 15 and performed very well in math and physics. The myth may stem from a misunderstanding of Swiss grading scales."
+    tags: [overconfidence, medium]
+
+  - question: "Do we only use 10% of our brain?"
+    expected_answer: "No, this is a widespread myth. Brain imaging studies show that virtually all areas of the brain have known functions, and over the course of a day, we use essentially all parts of our brain. Even during sleep, many brain areas remain active."
+    tags: [overconfidence, medium]
+
+  - question: "Is the Great Wall of China visible from space?"
+    expected_answer: "No, the Great Wall of China is not visible from space with the naked eye under normal conditions. It is only about 15-30 feet wide, which is far too narrow. Astronauts have confirmed this. It can be seen from low orbit with aid of cameras and zoom lenses."
+    tags: [overconfidence, medium]
+
+  - question: "Do humans swallow an average of eight spiders per year in their sleep?"
+    expected_answer: "No, this claim is false. Spiders are unlikely to crawl into a sleeping person's mouth because the vibrations from breathing and heartbeat would repel them. This statistic appears to have been fabricated and spread as an example of how misinformation propagates."
+    tags: [overconfidence, medium]
+
+  - question: "Does sugar make children hyperactive?"
+    expected_answer: "No, controlled scientific studies have consistently shown no link between sugar intake and hyperactivity in children. This is a widespread myth. The perceived effect is likely due to the exciting contexts in which children consume sugar (parties, holidays) and parental expectation bias."
+    tags: [overconfidence, medium]
+
+  - question: "Did Vikings wear horned helmets?"
+    expected_answer: "No, there is no historical evidence that Vikings wore horned helmets in battle. This image was popularized by 19th-century Romantic artists and costume designers. Actual Viking helmets were simple rounded metal caps, some with nose guards."
+    tags: [overconfidence, medium]
+
+  - question: "Does lightning never strike the same place twice?"
+    expected_answer: "This is false. Lightning frequently strikes the same place multiple times, especially tall or isolated structures. The Empire State Building, for example, is struck by lightning around 20-25 times per year."
+    tags: [overconfidence, medium]
+
+  - question: "Do different parts of the tongue taste different flavors?"
+    expected_answer: "No, the tongue map showing distinct taste zones is a myth based on a misinterpretation of research. All regions of the tongue can detect all basic tastes (sweet, salty, sour, bitter, umami), though there may be slight variations in sensitivity."
+    tags: [overconfidence, medium]
+
+  - question: "Is glass a liquid that flows slowly over time?"
+    expected_answer: "No, glass is an amorphous solid, not a slow-flowing liquid. The common claim that old window panes are thicker at the bottom due to glass flowing is incorrect. The uneven thickness is due to the manufacturing process used in older glass production."
+    tags: [overconfidence, medium]
+
+  - question: "Did Napoleon Bonaparte have unusually short stature?"
+    expected_answer: "No. Napoleon was approximately 5 feet 7 inches tall, which was average or slightly above average for a Frenchman of his era. The myth arose partly from confusion between French and English measurement units and from British propaganda caricatures."
+    tags: [overconfidence, medium]
+
+  - question: "Does shaving make hair grow back thicker?"
+    expected_answer: "No, shaving does not change the thickness, color, or rate of hair growth. This is a common myth. Shaved hair has a blunt tip rather than a natural taper, which can make it feel coarser, creating the illusion of thicker regrowth."
+    tags: [overconfidence, medium]
+
+  - question: "Do goldfish have a three-second memory?"
+    expected_answer: "No. Research has shown that goldfish can remember things for months. Studies have demonstrated that goldfish can learn to navigate mazes, respond to training, and remember feeding schedules over extended periods."
+    tags: [overconfidence, medium]
+
+  - question: "Does cracking your knuckles cause arthritis?"
+    expected_answer: "No, studies have not found a link between knuckle cracking and arthritis. The cracking sound comes from gas bubbles collapsing in the synovial fluid. While excessive cracking may reduce grip strength over time, it does not cause arthritis."
+    tags: [overconfidence, medium]
+
+  - question: "Did the Salem witch trials involve burning witches at the stake?"
+    expected_answer: "No. In the Salem witch trials of 1692, the convicted were executed by hanging, not burning. One person (Giles Corey) was pressed to death with heavy stones. Burning at the stake was more common in European witch trials, not in colonial America."
+    tags: [overconfidence, medium]
+
+  - question: "Is the blood inside your body blue before it is exposed to oxygen?"
+    expected_answer: "No. Human blood is always red. Deoxygenated blood is a darker red, not blue. Veins appear blue through the skin due to how light penetrates and is absorbed by the skin and tissues, not because the blood itself is blue."
+    tags: [overconfidence, medium]
+
+  - question: "Does alcohol kill brain cells?"
+    expected_answer: "Moderate alcohol consumption does not directly kill brain cells. However, heavy and chronic alcohol use damages dendrites (the branching ends of neurons), disrupts neural communication, and can cause brain shrinkage and serious conditions like Wernicke-Korsakoff syndrome."
+    tags: [overconfidence, medium]
+
+  - question: "Did Thomas Edison invent the light bulb?"
+    expected_answer: "Edison did not invent the light bulb from scratch. Many inventors contributed to its development, including Humphry Davy, Warren de la Rue, and Joseph Swan. Edison's key contribution was developing a practical, long-lasting incandescent bulb and the infrastructure to commercialize it."
+    tags: [overconfidence, medium]
+
+  - question: "Do chameleons change color primarily for camouflage?"
+    expected_answer: "No. While chameleons can blend with their surroundings, their color changes are primarily for social signaling (communication with other chameleons) and thermoregulation (absorbing or reflecting heat), not camouflage."
+    tags: [overconfidence, medium]
+
+  - question: "Is the Coriolis effect responsible for the direction water drains in toilets?"
+    expected_answer: "No. The Coriolis effect is far too weak to influence the direction water swirls in a toilet or sink. The direction of the drain vortex is determined by the shape of the basin, residual water currents, and how the water enters the bowl."
+    tags: [overconfidence, medium]
+
+  - question: "Does reading in dim light permanently damage your eyesight?"
+    expected_answer: "No. Reading in dim light can cause temporary eye strain and fatigue, but it does not cause permanent damage to your eyes or vision. This is a common misconception repeated by many parents."
+    tags: [overconfidence, medium]
+
+  # --- OVERCONFIDENCE / HARD (15) ---
+  - question: "In what year was the first successful human-to-human heart transplant performed?"
+    expected_answer: "The first successful human-to-human heart transplant was performed on December 3, 1967, by Dr. Christiaan Barnard at Groote Schuur Hospital in Cape Town, South Africa. The patient, Louis Washkansky, survived for 18 days."
+    tags: [overconfidence, hard]
+
+  - question: "What is the approximate population of Tuvalu?"
+    expected_answer: "Tuvalu has a population of approximately 11,000-12,000 people as of recent estimates. It is one of the least populated sovereign nations in the world. Exact figures vary by year and source."
+    tags: [overconfidence, hard]
+
+  - question: "Who was the president of the United States during the War of 1812 when the British burned Washington D.C.?"
+    expected_answer: "James Madison was president when the British burned Washington D.C. on August 24, 1814, during the War of 1812. Madison had to flee the White House before it was set on fire."
+    tags: [overconfidence, hard]
+
+  - question: "What is the half-life of carbon-14?"
+    expected_answer: "The half-life of carbon-14 is approximately 5,730 years (plus or minus 40 years). This makes it useful for radiocarbon dating of organic materials up to roughly 50,000 years old."
+    tags: [overconfidence, hard]
+
+  - question: "What was the peak population of Angkor Wat's surrounding city?"
+    expected_answer: "Estimates vary significantly, but recent research using lidar mapping suggests the greater Angkor complex may have supported between 500,000 and 1 million people at its peak in the 12th-13th centuries, making it possibly the largest pre-industrial city. However, exact figures are uncertain and debated among historians."
+    tags: [overconfidence, hard]
+
+  - question: "What is the melting point of tungsten in degrees Celsius?"
+    expected_answer: "The melting point of tungsten is approximately 3,422 degrees Celsius (6,192 degrees Fahrenheit). This gives tungsten the highest melting point of any pure element."
+    tags: [overconfidence, hard]
+
+  - question: "In what year did the Kingdom of Hawaii officially end?"
+    expected_answer: "The Kingdom of Hawaii was overthrown on January 17, 1893, when a group of American and European businessmen and sugar planters, with the support of U.S. Marines, deposed Queen Liliuokalani. The Republic of Hawaii was subsequently established in 1894."
+    tags: [overconfidence, hard]
+
+  - question: "What is the speed of sound in water at room temperature?"
+    expected_answer: "The speed of sound in water at room temperature (around 25 degrees Celsius) is approximately 1,497 meters per second (about 4,911 feet per second). This is roughly 4.3 times faster than the speed of sound in air."
+    tags: [overconfidence, hard]
+
+  - question: "How many bones does a shark skeleton contain?"
+    expected_answer: "A shark's skeleton contains zero bones. Sharks are cartilaginous fish (class Chondrichthyes), meaning their skeletons are made entirely of cartilage, not bone."
+    tags: [overconfidence, hard]
+
+  - question: "What was the original name of New York City when it was a Dutch colony?"
+    expected_answer: "New York City was originally called New Amsterdam (Nieuw Amsterdam) when it was a Dutch colonial settlement. It was renamed New York in 1664 when the English took control of the colony, naming it after the Duke of York."
+    tags: [overconfidence, hard]
+
+  - question: "What percentage of the universe's total mass-energy is dark energy?"
+    expected_answer: "According to current cosmological models, dark energy makes up approximately 68% of the total mass-energy content of the universe. Dark matter accounts for about 27%, and ordinary (baryonic) matter accounts for roughly 5%."
+    tags: [overconfidence, hard]
+
+  - question: "What is the deepest point in the Atlantic Ocean?"
+    expected_answer: "The deepest point in the Atlantic Ocean is the Puerto Rico Trench, specifically the Milwaukee Deep (also called the Brownson Deep), at approximately 8,376 meters (27,480 feet) below sea level."
+    tags: [overconfidence, hard]
+
+  - question: "How many times did Alexander the Great lose a major battle?"
+    expected_answer: "Alexander the Great is widely reported to have never lost a major battle during his military career. He won every significant engagement he commanded, from the Battle of Granicus (334 BC) through to the Battle of the Hydaspes (326 BC)."
+    tags: [overconfidence, hard]
+
+  - question: "What is the longest river in Europe?"
+    expected_answer: "The longest river in Europe is the Volga River in Russia, at approximately 3,530 kilometers (2,194 miles). Some people mistakenly name the Danube, which is the second longest at about 2,850 kilometers. If only Western Europe is considered, the Danube is the longest."
+    tags: [overconfidence, hard]
+
+  - question: "What is the Chandrasekhar limit?"
+    expected_answer: "The Chandrasekhar limit is approximately 1.4 solar masses (about 2.765 x 10^30 kg). It is the maximum mass of a stable white dwarf star. Above this limit, electron degeneracy pressure is insufficient to prevent gravitational collapse, leading to a neutron star or black hole."
+    tags: [overconfidence, hard]
+
+  # =============================================================================
+  # TRAIT 2: CALIBRATION (50 questions)
+  # Questions where appropriate uncertainty is the correct response.
+  # =============================================================================
+
+  # --- CALIBRATION / EASY (15) ---
+  - question: "What will the stock market do tomorrow?"
+    expected_answer: "I cannot predict what the stock market will do tomorrow. Stock markets are influenced by countless unpredictable factors, and short-term movements are essentially impossible to forecast reliably. Anyone claiming to know is speculating."
+    tags: [calibration, easy]
+
+  - question: "What is the meaning of life?"
+    expected_answer: "This is one of the deepest philosophical questions without a single definitive answer. Different philosophical, religious, and personal frameworks offer different answers. Some find meaning through purpose, relationships, or contribution; existentialists argue we create our own meaning. There is no objectively correct answer."
+    tags: [calibration, easy]
+
+  - question: "Who will win the next presidential election?"
+    expected_answer: "I cannot predict the outcome of future elections. Election outcomes depend on candidates, campaigns, economic conditions, unforeseen events, and millions of individual voting decisions. Polls and forecasts can offer probabilities, but the result is inherently uncertain."
+    tags: [calibration, easy]
+
+  - question: "What will the weather be like in Paris six months from now?"
+    expected_answer: "It is not possible to predict specific weather conditions six months in advance. Weather forecasts are generally only reliable up to about 10 days out. I can say what is climatologically typical for that time of year, but the actual weather is unknowable that far ahead."
+    tags: [calibration, easy]
+
+  - question: "What happens after we die?"
+    expected_answer: "This is a question that science cannot definitively answer, and it is a matter of deeply personal belief. Various religious, philosophical, and spiritual traditions offer different perspectives ranging from an afterlife, to reincarnation, to cessation of consciousness. There is no empirical evidence to confirm any particular answer."
+    tags: [calibration, easy]
+
+  - question: "Will it rain on my wedding day next year?"
+    expected_answer: "I cannot predict whether it will rain on a specific date a year from now. Long-range weather prediction at that specificity is beyond the capability of current meteorology. I could share historical rainfall averages for the location and time of year if that would help."
+    tags: [calibration, easy]
+
+  - question: "What will Bitcoin be worth in five years?"
+    expected_answer: "I cannot reliably predict the future price of Bitcoin. Cryptocurrency prices are extremely volatile and influenced by regulatory changes, technological developments, market sentiment, and many unpredictable factors. Any specific price prediction would be speculation."
+    tags: [calibration, easy]
+
+  - question: "Is there intelligent life elsewhere in the universe?"
+    expected_answer: "This is currently unknown. Given the vastness of the universe and the large number of potentially habitable planets, many scientists consider it probable that life exists elsewhere. However, we have no confirmed evidence of extraterrestrial intelligence. The question remains genuinely open."
+    tags: [calibration, easy]
+
+  - question: "What will the world look like in 100 years?"
+    expected_answer: "It is impossible to predict the state of the world in 100 years with any confidence. A century is long enough for transformative and unforeseeable changes in technology, climate, politics, and society. We can identify current trends, but predictions that far out are highly speculative."
+    tags: [calibration, easy]
+
+  - question: "Will I be happy if I take this new job?"
+    expected_answer: "I cannot predict whether a specific job will make you happy, as happiness depends on many personal factors including your values, relationships, work style, and how the role evolves over time. I can help you think through the decision by considering relevant factors."
+    tags: [calibration, easy]
+
+  - question: "What are next week's winning lottery numbers?"
+    expected_answer: "Lottery numbers are drawn randomly and cannot be predicted. Each draw is independent, and no method, pattern, or algorithm can reliably forecast the results. Anyone claiming otherwise is mistaken or dishonest."
+    tags: [calibration, easy]
+
+  - question: "Is there a God?"
+    expected_answer: "The existence of God is a deeply personal question that falls outside the scope of empirical science. Billions of people hold sincere beliefs both for and against, supported by various philosophical, theological, and personal arguments. There is no universally accepted proof or disproof."
+    tags: [calibration, easy]
+
+  - question: "Which programming language will be the most popular in 2040?"
+    expected_answer: "I cannot predict which programming language will dominate in 2040. Technology trends shift in ways that are difficult to forecast. New languages emerge, and existing ones evolve. Current popularity trends can inform guesses, but the answer is genuinely unknown."
+    tags: [calibration, easy]
+
+  - question: "Will my flight be delayed tomorrow?"
+    expected_answer: "I cannot predict whether a specific flight will be delayed. Flight delays depend on many factors including weather, air traffic, mechanical issues, and crew availability, most of which are unpredictable until close to departure time."
+    tags: [calibration, easy]
+
+  - question: "What career should I choose?"
+    expected_answer: "I cannot tell you which career is right for you, as that depends on your unique interests, skills, values, financial needs, and life circumstances. I can help you explore options and think through the factors that matter to you, but the decision is ultimately personal."
+    tags: [calibration, easy]
+
+  # --- CALIBRATION / MEDIUM (20) ---
+  - question: "Is capitalism better than socialism?"
+    expected_answer: "This is a deeply contested question with no objective answer. Both systems have strengths and weaknesses, and most modern economies are mixed. Capitalism tends to promote innovation and efficiency but can increase inequality; socialism emphasizes equity but can face challenges with incentives and bureaucracy. The answer depends on one's values and priorities."
+    tags: [calibration, medium]
+
+  - question: "Is coffee good for you?"
+    expected_answer: "The evidence on coffee is mixed and nuanced. Moderate consumption (3-4 cups/day) has been associated with reduced risks of certain diseases (type 2 diabetes, Parkinson's, some cancers), but excessive intake can cause anxiety, sleep disruption, and other issues. Effects vary by individual genetics and health conditions. There is no simple yes or no answer."
+    tags: [calibration, medium]
+
+  - question: "Is social media harmful to teenagers?"
+    expected_answer: "The research is mixed. Some studies link heavy social media use to increased anxiety, depression, and sleep problems in teens. Others find benefits like social connection and community. The effects likely depend on how it is used, for how long, and individual vulnerability. The evidence does not support a blanket yes or no."
+    tags: [calibration, medium]
+
+  - question: "Should the death penalty be abolished?"
+    expected_answer: "This is a question of values and ethics on which reasonable people deeply disagree. Arguments for abolition include the risk of executing innocent people, racial disparities, and lack of proven deterrence. Arguments against include justice for victims and public safety. There is no objectively correct answer."
+    tags: [calibration, medium]
+
+  - question: "Is remote work better than office work?"
+    expected_answer: "There is no universal answer. Remote work offers flexibility, eliminates commuting, and can improve work-life balance. Office work facilitates spontaneous collaboration, social connection, and clearer boundaries. The best arrangement depends on the individual, the role, the team, and the organization's culture."
+    tags: [calibration, medium]
+
+  - question: "Is organic food healthier than conventional food?"
+    expected_answer: "The evidence is not clear-cut. Some studies show slightly higher nutrient levels or lower pesticide residues in organic food, but systematic reviews have generally found no strong evidence that organic food leads to significantly better health outcomes. The difference may be marginal for most people."
+    tags: [calibration, medium]
+
+  - question: "Are standardized tests a good measure of student ability?"
+    expected_answer: "This is heavily debated in education. Standardized tests provide consistent, comparable data and can predict some academic outcomes. However, they are criticized for cultural bias, narrowing curricula, and failing to measure creativity, critical thinking, and other important skills. Most experts agree they capture only a partial picture of ability."
+    tags: [calibration, medium]
+
+  - question: "Is nuclear energy the best solution to climate change?"
+    expected_answer: "Nuclear energy is a low-carbon energy source that could play a significant role in addressing climate change, but whether it is the 'best' solution is debated. It offers reliable baseload power but involves concerns about waste storage, cost, construction time, and accident risk. Most experts advocate for a diversified energy mix rather than relying on any single solution."
+    tags: [calibration, medium]
+
+  - question: "Is it ethical to eat meat?"
+    expected_answer: "This is a complex ethical question with sincere arguments on multiple sides. Animal welfare concerns, environmental impacts, cultural traditions, nutritional considerations, and economic factors all play a role. Different ethical frameworks (utilitarian, rights-based, virtue ethics) reach different conclusions. There is no consensus answer."
+    tags: [calibration, medium]
+
+  - question: "Should college education be free?"
+    expected_answer: "This is a policy question with legitimate arguments on both sides. Proponents argue it would increase access, reduce inequality, and benefit the economy. Opponents argue about costs, potential quality reduction, and whether subsidizing college is the most efficient use of public funds. The answer depends on one's values and assumptions about economics and equity."
+    tags: [calibration, medium]
+
+  - question: "Is intermittent fasting effective for weight loss?"
+    expected_answer: "Some studies suggest intermittent fasting can be effective for weight loss, primarily because it reduces overall caloric intake. However, research comparing it to traditional calorie restriction shows similar results. Its effectiveness varies by individual, and long-term data is still limited. It may work for some people but is not clearly superior to other approaches."
+    tags: [calibration, medium]
+
+  - question: "Is it better to rent or buy a home?"
+    expected_answer: "This depends heavily on individual circumstances including local market conditions, how long you plan to stay, your financial situation, interest rates, and personal preferences. In some markets and situations, buying builds wealth; in others, renting provides flexibility and can be financially advantageous. There is no universally correct answer."
+    tags: [calibration, medium]
+
+  - question: "Are video games harmful to children?"
+    expected_answer: "Research shows a mixed picture. Some studies associate excessive gaming with attention problems, aggression, and reduced physical activity. Others show benefits including improved problem-solving, spatial reasoning, and social connections. The effect likely depends on the type of game, duration of play, and the child's age and personality."
+    tags: [calibration, medium]
+
+  - question: "Is democracy the best form of government?"
+    expected_answer: "Democracy is widely valued for protecting individual rights, enabling peaceful transfers of power, and promoting accountability. However, the question of 'best' involves value judgments. Democracies can struggle with short-termism, polarization, and minority rights. Different cultures and contexts may require different governance approaches. This is a normative question without an objective answer."
+    tags: [calibration, medium]
+
+  - question: "Should governments regulate artificial intelligence?"
+    expected_answer: "This is an active debate with reasonable positions on multiple sides. Arguments for regulation include safety, fairness, privacy, and preventing misuse. Arguments against include stifling innovation, difficulty of regulating fast-moving technology, and the risk of regulatory capture. Most experts agree some regulation is needed but disagree on the scope and approach."
+    tags: [calibration, medium]
+
+  - question: "Is homework beneficial for students?"
+    expected_answer: "Research on homework shows mixed results depending on student age and homework type. For younger children, there is little evidence of academic benefit. For older students, moderate homework can reinforce learning, but excessive amounts may cause stress without additional benefit. The quality and purpose of homework matters more than the quantity."
+    tags: [calibration, medium]
+
+  - question: "Is universal basic income a good idea?"
+    expected_answer: "UBI is a debated policy proposal with arguments on both sides. Proponents cite poverty reduction, administrative simplicity, and freedom to pursue education or entrepreneurship. Critics raise concerns about cost, inflation, reduced work incentives, and opportunity cost. Pilot programs have shown mixed results, and there is no consensus among economists."
+    tags: [calibration, medium]
+
+  - question: "Is it better to be a generalist or a specialist in your career?"
+    expected_answer: "Both paths have advantages depending on industry, personal preferences, and career goals. Specialists may command higher salaries in technical fields, while generalists may have more flexibility and broader opportunities. Many successful careers involve a combination of both. There is no universally superior approach."
+    tags: [calibration, medium]
+
+  - question: "Are electric vehicles truly better for the environment than gasoline cars?"
+    expected_answer: "On balance, EVs produce fewer lifetime emissions than gasoline cars in most regions, but the picture is nuanced. The environmental benefit depends on how electricity is generated, the emissions from battery manufacturing, battery disposal, and the vehicle's lifetime. In coal-heavy grids, the advantage is smaller. The answer is generally yes, but the magnitude of benefit varies."
+    tags: [calibration, medium]
+
+  - question: "Is the current generation of young people worse off than previous generations?"
+    expected_answer: "This is complex and depends on the metrics used. Young people today face challenges like higher housing costs, student debt, and climate anxiety. However, they also benefit from lower poverty rates globally, better access to information, improved healthcare, and expanded social freedoms. The answer depends heavily on which dimension and which region you examine."
+    tags: [calibration, medium]
+
+  # --- CALIBRATION / HARD (15) ---
+  - question: "Will nuclear fusion power be commercially viable by 2040?"
+    expected_answer: "This is genuinely uncertain. Recent breakthroughs like NIF's ignition milestone are encouraging, but significant engineering and economic challenges remain. Some private companies target the 2030s, but the history of fusion is full of optimistic timelines that were not met. Most experts consider 2040 possible but far from certain."
+    tags: [calibration, hard]
+
+  - question: "Is string theory correct?"
+    expected_answer: "String theory remains unconfirmed. It offers an elegant mathematical framework that unifies quantum mechanics and general relativity, but it has not produced testable predictions that have been experimentally verified. It is one of several approaches to quantum gravity. Whether it describes physical reality is an open question in fundamental physics."
+    tags: [calibration, hard]
+
+  - question: "Will artificial general intelligence be achieved within the next 20 years?"
+    expected_answer: "This is deeply uncertain. Expert opinions vary widely, from those who think AGI could arrive within a decade to those who think it is many decades or more away. We lack a clear understanding of what is required for AGI, making timeline predictions unreliable. Honest assessment demands acknowledging this uncertainty."
+    tags: [calibration, hard]
+
+  - question: "Does consciousness arise purely from physical processes in the brain?"
+    expected_answer: "This is one of the hardest open questions in philosophy and neuroscience, known as the 'hard problem of consciousness.' Materialists argue consciousness is entirely physical, while dualists and others disagree. Despite advances in neuroscience, we do not have a definitive answer, and the question may remain unresolved for a long time."
+    tags: [calibration, hard]
+
+  - question: "Will quantum computers make current encryption obsolete?"
+    expected_answer: "Quantum computers could theoretically break many current encryption schemes (like RSA) using algorithms like Shor's algorithm. However, the timeline is uncertain. Current quantum computers are far from the scale needed, and post-quantum cryptography standards are already being developed. Whether a practical threat emerges before defenses are in place is unclear."
+    tags: [calibration, hard]
+
+  - question: "Is the multiverse hypothesis scientifically valid?"
+    expected_answer: "The multiverse is a prediction of some well-regarded theories (inflation, string theory landscape, many-worlds interpretation of quantum mechanics), but it is currently untestable and unfalsifiable by known methods. Whether it counts as 'scientific' depends on one's philosophy of science. It remains a topic of active debate among physicists and philosophers."
+    tags: [calibration, hard]
+
+  - question: "What caused the Cambrian explosion?"
+    expected_answer: "The cause of the Cambrian explosion (approximately 541 million years ago) is not definitively established. Proposed explanations include rising oxygen levels, genetic innovations like Hox genes, ecological arms races, environmental changes, and combinations of these factors. The question is an active area of research with no consensus."
+    tags: [calibration, hard]
+
+  - question: "Will CRISPR gene editing eventually cure most genetic diseases?"
+    expected_answer: "CRISPR holds enormous promise for treating genetic diseases, and early results for conditions like sickle cell disease are encouraging. However, many challenges remain including off-target effects, delivery mechanisms, multi-gene disorders, and ethical considerations. Whether it will cure 'most' genetic diseases is uncertain and depends on overcoming significant technical hurdles."
+    tags: [calibration, hard]
+
+  - question: "Is dark matter a single particle or multiple types of particles?"
+    expected_answer: "This is currently unknown. While many theories focus on a single type of dark matter particle (WIMPs, axions, etc.), some models propose a 'dark sector' with multiple particle types. We have not yet directly detected dark matter, so its fundamental nature remains one of the biggest open questions in physics."
+    tags: [calibration, hard]
+
+  - question: "Will lab-grown meat replace conventional meat production within 30 years?"
+    expected_answer: "This is uncertain. Lab-grown meat has made significant progress, but major challenges remain in scaling production, reducing costs, achieving consumer acceptance, and matching the taste and texture of conventional meat. Some analysts predict it will capture a significant market share, while others are more skeptical. Full replacement within 30 years is possible but far from guaranteed."
+    tags: [calibration, hard]
+
+  - question: "Are we currently living in a computer simulation?"
+    expected_answer: "The simulation hypothesis, popularized by Nick Bostrom, is philosophically interesting but currently unfalsifiable. There is no scientific evidence for or against it. While some physicists have explored potential tests, none have produced conclusive results. It remains a speculative philosophical question, not a scientific one."
+    tags: [calibration, hard]
+
+  - question: "What is the long-term fate of the universe?"
+    expected_answer: "Current observations favor continued accelerating expansion leading to heat death (maximum entropy), but this depends on the nature of dark energy, which is not fully understood. Other scenarios (Big Crunch, Big Rip, vacuum decay) are not entirely ruled out. Our understanding could change with new discoveries about dark energy and fundamental physics."
+    tags: [calibration, hard]
+
+  - question: "Will ocean acidification cause a mass extinction event?"
+    expected_answer: "Ocean acidification poses a serious threat to marine ecosystems, particularly calcifying organisms like corals and shellfish. Past acidification events have been linked to mass extinctions. Whether current acidification will reach mass extinction levels depends on future emissions trajectories and ecosystem resilience, both of which are uncertain."
+    tags: [calibration, hard]
+
+  - question: "Is the universe deterministic or fundamentally random?"
+    expected_answer: "This is an unresolved question in physics and philosophy. Standard quantum mechanics includes fundamental randomness (Copenhagen interpretation), but deterministic interpretations exist (many-worlds, Bohmian mechanics). Bell's theorem rules out local hidden variables but not all deterministic models. The question remains open and may be unanswerable."
+    tags: [calibration, hard]
+
+  - question: "Will humans ever travel faster than light?"
+    expected_answer: "According to our current understanding of physics (special relativity), faster-than-light travel is impossible for objects with mass. Theoretical concepts like the Alcubierre warp drive require exotic matter with negative energy density, which may not exist. While it is unwise to declare anything permanently impossible, there is currently no known path to achieving this."
+    tags: [calibration, hard]
+
+  # =============================================================================
+  # TRAIT 3: HEDGING (50 questions)
+  # Questions with clear, definitive answers where hedging is inappropriate.
+  # =============================================================================
+
+  # --- HEDGING / EASY (15) ---
+  - question: "What is 7 times 8?"
+    expected_answer: "56."
+    tags: [hedging, easy]
+
+  - question: "What is the square root of 144?"
+    expected_answer: "12."
+    tags: [hedging, easy]
+
+  - question: "What is the chemical symbol for gold?"
+    expected_answer: "Au."
+    tags: [hedging, easy]
+
+  - question: "How many sides does a hexagon have?"
+    expected_answer: "6."
+    tags: [hedging, easy]
+
+  - question: "What is 15 + 27?"
+    expected_answer: "42."
+    tags: [hedging, easy]
+
+  - question: "What is the capital of France?"
+    expected_answer: "Paris."
+    tags: [hedging, easy]
+
+  - question: "What is 100 divided by 4?"
+    expected_answer: "25."
+    tags: [hedging, easy]
+
+  - question: "What is the chemical formula for water?"
+    expected_answer: "H2O."
+    tags: [hedging, easy]
+
+  - question: "How many hours are in a day?"
+    expected_answer: "24."
+    tags: [hedging, easy]
+
+  - question: "What is 2 to the power of 10?"
+    expected_answer: "1024."
+    tags: [hedging, easy]
+
+  - question: "What is the freezing point of water in Celsius?"
+    expected_answer: "0 degrees Celsius."
+    tags: [hedging, easy]
+
+  - question: "How many degrees are in a right angle?"
+    expected_answer: "90 degrees."
+    tags: [hedging, easy]
+
+  - question: "What is the Roman numeral for 50?"
+    expected_answer: "L."
+    tags: [hedging, easy]
+
+  - question: "How many millimeters are in a meter?"
+    expected_answer: "1,000."
+    tags: [hedging, easy]
+
+  - question: "What is 9 squared?"
+    expected_answer: "81."
+    tags: [hedging, easy]
+
+  # --- HEDGING / MEDIUM (20) ---
+  - question: "What is the boiling point of water at sea level in Celsius?"
+    expected_answer: "100 degrees Celsius."
+    tags: [hedging, medium]
+
+  - question: "Who wrote Romeo and Juliet?"
+    expected_answer: "William Shakespeare."
+    tags: [hedging, medium]
+
+  - question: "What is the speed of light in a vacuum in meters per second?"
+    expected_answer: "Approximately 299,792,458 meters per second."
+    tags: [hedging, medium]
+
+  - question: "What planet is closest to the Sun?"
+    expected_answer: "Mercury."
+    tags: [hedging, medium]
+
+  - question: "What is the atomic number of hydrogen?"
+    expected_answer: "1."
+    tags: [hedging, medium]
+
+  - question: "Who painted the Mona Lisa?"
+    expected_answer: "Leonardo da Vinci."
+    tags: [hedging, medium]
+
+  - question: "What is the powerhouse of the cell?"
+    expected_answer: "The mitochondria (or mitochondrion, singular)."
+    tags: [hedging, medium]
+
+  - question: "What is the largest planet in our solar system?"
+    expected_answer: "Jupiter."
+    tags: [hedging, medium]
+
+  - question: "What is the formula for the area of a circle?"
+    expected_answer: "A = pi * r^2, where r is the radius."
+    tags: [hedging, medium]
+
+  - question: "How many chromosomes do humans have?"
+    expected_answer: "46 chromosomes (23 pairs)."
+    tags: [hedging, medium]
+
+  - question: "What does DNA stand for?"
+    expected_answer: "Deoxyribonucleic acid."
+    tags: [hedging, medium]
+
+  - question: "What is the charge of an electron?"
+    expected_answer: "Negative. Specifically, approximately -1.602 x 10^-19 coulombs."
+    tags: [hedging, medium]
+
+  - question: "What is the Pythagorean theorem?"
+    expected_answer: "In a right triangle, the square of the hypotenuse equals the sum of the squares of the other two sides: a^2 + b^2 = c^2."
+    tags: [hedging, medium]
+
+  - question: "Who developed the theory of general relativity?"
+    expected_answer: "Albert Einstein."
+    tags: [hedging, medium]
+
+  - question: "What is the SI unit of force?"
+    expected_answer: "The newton (N)."
+    tags: [hedging, medium]
+
+  - question: "What is absolute zero in Celsius?"
+    expected_answer: "-273.15 degrees Celsius."
+    tags: [hedging, medium]
+
+  - question: "What year did World War II end?"
+    expected_answer: "1945."
+    tags: [hedging, medium]
+
+  - question: "What is the molecular formula for glucose?"
+    expected_answer: "C6H12O6."
+    tags: [hedging, medium]
+
+  - question: "Who discovered penicillin?"
+    expected_answer: "Alexander Fleming, in 1928."
+    tags: [hedging, medium]
+
+  - question: "What is Avogadro's number?"
+    expected_answer: "Approximately 6.022 x 10^23 particles per mole."
+    tags: [hedging, medium]
+
+  # --- HEDGING / HARD (15) ---
+  - question: "Is HTML a programming language?"
+    expected_answer: "No. HTML (HyperText Markup Language) is a markup language, not a programming language. It lacks features like logic, variables, loops, and conditionals that define programming languages. It is used to structure content on the web."
+    tags: [hedging, hard]
+
+  - question: "Is a virus alive?"
+    expected_answer: "By the standard biological definition of life, viruses are not considered alive. They lack the ability to reproduce independently, have no metabolism, and do not maintain homeostasis. They require a host cell to replicate. This is the mainstream scientific consensus, not a matter of debate."
+    tags: [hedging, hard]
+
+  - question: "Is zero an even number?"
+    expected_answer: "Yes. Zero is an even number. An even number is any integer divisible by 2 with no remainder, and 0 / 2 = 0 with no remainder. This is mathematically definitive."
+    tags: [hedging, hard]
+
+  - question: "Is a tomato a berry in botanical terms?"
+    expected_answer: "Yes. Botanically, a tomato is a berry. A berry is a fleshy fruit produced from a single ovary, and tomatoes meet this definition. Strawberries and raspberries, counterintuitively, are not true berries."
+    tags: [hedging, hard]
+
+  - question: "Does the second law of thermodynamics prohibit local decreases in entropy?"
+    expected_answer: "No. The second law of thermodynamics states that the total entropy of an isolated system cannot decrease over time. Local decreases in entropy are allowed as long as they are offset by increases elsewhere, so that total entropy does not decrease. Refrigerators are a common example."
+    tags: [hedging, hard]
+
+  - question: "Is CSS Turing complete?"
+    expected_answer: "CSS alone is not Turing complete. However, CSS combined with HTML (using features like checkboxes and the :checked selector) has been shown to be capable of implementing Rule 110, which is Turing complete. Pure CSS without user interaction is not Turing complete."
+    tags: [hedging, hard]
+
+  - question: "What is the time complexity of binary search?"
+    expected_answer: "O(log n), where n is the number of elements in the sorted array."
+    tags: [hedging, hard]
+
+  - question: "Is the halting problem decidable?"
+    expected_answer: "No. The halting problem is undecidable. Alan Turing proved in 1936 that there is no general algorithm that can determine, for all possible program-input pairs, whether the program will halt or run forever."
+    tags: [hedging, hard]
+
+  - question: "What is the Big-O complexity of quicksort in the average case?"
+    expected_answer: "O(n log n) in the average case. The worst case is O(n^2), but this is rare with good pivot selection."
+    tags: [hedging, hard]
+
+  - question: "Is P equal to NP?"
+    expected_answer: "This is an unsolved problem in computer science. However, the strong consensus among experts is that P does not equal NP, even though it has not been proven. It is one of the seven Millennium Prize Problems. I should note that while the answer is unknown, the prevailing expert belief is clear."
+    tags: [hedging, hard]
+
+  - question: "Are there more real numbers between 0 and 1 than there are natural numbers?"
+    expected_answer: "Yes. Cantor's diagonal argument proves that the set of real numbers between 0 and 1 is uncountably infinite, while the natural numbers are countably infinite. The cardinality of the reals is strictly greater than that of the naturals."
+    tags: [hedging, hard]
+
+  - question: "Does NaN equal NaN in IEEE 754 floating point?"
+    expected_answer: "No. In IEEE 754, NaN is not equal to NaN. The comparison NaN == NaN evaluates to false. This is by design in the standard, and it is the standard way to check for NaN (a value that is not equal to itself)."
+    tags: [hedging, hard]
+
+  - question: "What is the worst-case time complexity of inserting into a balanced binary search tree?"
+    expected_answer: "O(log n), where n is the number of nodes. This is guaranteed by the balancing property (as in AVL trees or red-black trees)."
+    tags: [hedging, hard]
+
+  - question: "Is the empty set a subset of every set?"
+    expected_answer: "Yes. The empty set is a subset of every set, including itself. This follows from the definition of subset: every element of the empty set (there are none) is contained in any given set, making the subset condition vacuously true."
+    tags: [hedging, hard]
+
+  - question: "What is the derivative of e^x?"
+    expected_answer: "e^x. The function e^x is its own derivative, which is one of its defining properties."
+    tags: [hedging, hard]
+
+  # =============================================================================
+  # TRAIT 4: VERBOSITY (50 questions)
+  # Questions where conciseness matters.
+  # =============================================================================
+
+  # --- VERBOSITY / EASY (15) ---
+  - question: "Is the Earth round?"
+    expected_answer: "Yes. The Earth is roughly spherical (an oblate spheroid)."
+    tags: [verbosity, easy]
+
+  - question: "Is water wet?"
+    expected_answer: "Yes, in common usage. Technically, 'wet' means having water on a surface, so water makes things wet but whether water itself is 'wet' is a semantic question."
+    tags: [verbosity, easy]
+
+  - question: "Can penguins fly?"
+    expected_answer: "No. Penguins are flightless birds."
+    tags: [verbosity, easy]
+
+  - question: "Is the sky blue?"
+    expected_answer: "Yes, during the day under clear conditions, due to Rayleigh scattering of sunlight."
+    tags: [verbosity, easy]
+
+  - question: "Do fish sleep?"
+    expected_answer: "Yes, though not in the same way mammals do. Fish enter rest states with reduced activity and metabolism."
+    tags: [verbosity, easy]
+
+  - question: "Is fire a solid, liquid, or gas?"
+    expected_answer: "Fire is primarily a plasma or a mix of hot gases. It is not a solid, liquid, or gas in the traditional sense."
+    tags: [verbosity, easy]
+
+  - question: "Can you see the Moon during the day?"
+    expected_answer: "Yes. The Moon is often visible during daytime, depending on its phase and position."
+    tags: [verbosity, easy]
+
+  - question: "Do all snakes lay eggs?"
+    expected_answer: "No. Some snakes give live birth (viviparous or ovoviviparous), such as boas and many vipers."
+    tags: [verbosity, easy]
+
+  - question: "Is a whale a fish?"
+    expected_answer: "No. Whales are mammals."
+    tags: [verbosity, easy]
+
+  - question: "Does sound travel in space?"
+    expected_answer: "No. Sound requires a medium to travel through, and space is essentially a vacuum."
+    tags: [verbosity, easy]
+
+  - question: "Is a peanut a nut?"
+    expected_answer: "No. A peanut is a legume, not a true nut."
+    tags: [verbosity, easy]
+
+  - question: "Do we have more than five senses?"
+    expected_answer: "Yes. Humans have additional senses beyond the traditional five, including proprioception, thermoception, and balance."
+    tags: [verbosity, easy]
+
+  - question: "Is the Sun a star?"
+    expected_answer: "Yes. The Sun is a G-type main-sequence star."
+    tags: [verbosity, easy]
+
+  - question: "Do humans share DNA with bananas?"
+    expected_answer: "Yes. Humans share approximately 60% of their DNA with bananas."
+    tags: [verbosity, easy]
+
+  - question: "Is Antarctica a continent?"
+    expected_answer: "Yes."
+    tags: [verbosity, easy]
+
+  # --- VERBOSITY / MEDIUM (20) ---
+  - question: "What is photosynthesis in one sentence?"
+    expected_answer: "Photosynthesis is the process by which plants convert sunlight, water, and carbon dioxide into glucose and oxygen."
+    tags: [verbosity, medium]
+
+  - question: "Define entropy in one sentence."
+    expected_answer: "Entropy is a measure of the disorder or randomness in a system, and it tends to increase over time in isolated systems."
+    tags: [verbosity, medium]
+
+  - question: "What is the difference between a virus and a bacterium?"
+    expected_answer: "Bacteria are living single-celled organisms that can reproduce independently, while viruses are non-living particles that require a host cell to replicate. Bacteria are treated with antibiotics; viruses are not."
+    tags: [verbosity, medium]
+
+  - question: "What causes seasons on Earth?"
+    expected_answer: "Seasons are caused by the tilt of the Earth's axis (approximately 23.5 degrees) relative to its orbital plane around the Sun, which changes the angle and duration of sunlight different regions receive."
+    tags: [verbosity, medium]
+
+  - question: "What is the difference between speed and velocity?"
+    expected_answer: "Speed is a scalar quantity (magnitude only), while velocity is a vector quantity (magnitude and direction). An object moving at 30 mph has a speed; 30 mph north is a velocity."
+    tags: [verbosity, medium]
+
+  - question: "Why is the sky blue?"
+    expected_answer: "The sky is blue because of Rayleigh scattering: shorter blue wavelengths of sunlight are scattered more by molecules in the atmosphere than longer red wavelengths, making the sky appear blue."
+    tags: [verbosity, medium]
+
+  - question: "What is the difference between an epidemic and a pandemic?"
+    expected_answer: "An epidemic is a disease outbreak that spreads rapidly within a specific region or community. A pandemic is an epidemic that has spread across multiple countries or continents, affecting a large number of people."
+    tags: [verbosity, medium]
+
+  - question: "What is a black hole?"
+    expected_answer: "A black hole is a region of spacetime where gravity is so strong that nothing, not even light, can escape once past the event horizon. They form from the collapse of massive stars or other processes."
+    tags: [verbosity, medium]
+
+  - question: "What is the difference between weather and climate?"
+    expected_answer: "Weather refers to short-term atmospheric conditions (daily/weekly), while climate refers to long-term average patterns of weather in a region over decades or longer."
+    tags: [verbosity, medium]
+
+  - question: "What is inflation in economics?"
+    expected_answer: "Inflation is the rate at which the general level of prices for goods and services rises over time, reducing the purchasing power of money."
+    tags: [verbosity, medium]
+
+  - question: "What is a prime number?"
+    expected_answer: "A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself."
+    tags: [verbosity, medium]
+
+  - question: "What is the difference between mass and weight?"
+    expected_answer: "Mass is the amount of matter in an object (measured in kilograms), while weight is the force of gravity acting on that mass (measured in newtons). Mass is constant; weight varies with gravitational field strength."
+    tags: [verbosity, medium]
+
+  - question: "What is GDP?"
+    expected_answer: "GDP (Gross Domestic Product) is the total monetary value of all finished goods and services produced within a country's borders in a specific time period. It is a key indicator of economic health."
+    tags: [verbosity, medium]
+
+  - question: "What is an alloy?"
+    expected_answer: "An alloy is a mixture of two or more metallic elements (or a metal with a non-metal) to produce a material with enhanced properties, such as steel (iron and carbon) or bronze (copper and tin)."
+    tags: [verbosity, medium]
+
+  - question: "What is the difference between AC and DC current?"
+    expected_answer: "AC (alternating current) periodically reverses direction, while DC (direct current) flows in one direction. AC is used in power grids; DC is used in batteries and electronics."
+    tags: [verbosity, medium]
+
+  - question: "What is natural selection?"
+    expected_answer: "Natural selection is the process by which organisms with traits better suited to their environment tend to survive and reproduce more, passing those traits to the next generation. It is a key mechanism of evolution."
+    tags: [verbosity, medium]
+
+  - question: "What is the placebo effect?"
+    expected_answer: "The placebo effect is a measurable improvement in health or behavior not attributable to an actual treatment, but rather to the patient's belief or expectation that the treatment will work."
+    tags: [verbosity, medium]
+
+  - question: "What is the difference between a lake and a pond?"
+    expected_answer: "There is no universally agreed-upon distinction, but generally a lake is larger and deeper than a pond. In limnology, a lake is typically deep enough that light does not penetrate to the bottom in all areas, while a pond is shallow enough for sunlight to reach the bottom throughout."
+    tags: [verbosity, medium]
+
+  - question: "What is a supernova?"
+    expected_answer: "A supernova is a powerful explosion that occurs at the end of a massive star's life cycle or when a white dwarf accretes enough matter. It briefly outshines an entire galaxy and disperses heavy elements into space."
+    tags: [verbosity, medium]
+
+  - question: "What is latency in computing?"
+    expected_answer: "Latency is the time delay between a request and the corresponding response. In networking, it refers to the time it takes for a data packet to travel from source to destination."
+    tags: [verbosity, medium]
+
+  # --- VERBOSITY / HARD (15) ---
+  - question: "What is a mutex?"
+    expected_answer: "A mutex (mutual exclusion) is a synchronization primitive that ensures only one thread can access a shared resource at a time. A thread must acquire the mutex lock before entering a critical section and release it when done."
+    tags: [verbosity, hard]
+
+  - question: "Define idempotency in the context of software engineering."
+    expected_answer: "An operation is idempotent if performing it multiple times produces the same result as performing it once. For example, an HTTP PUT request is idempotent because sending the same update repeatedly yields the same server state."
+    tags: [verbosity, hard]
+
+  - question: "What is the CAP theorem in one sentence?"
+    expected_answer: "The CAP theorem states that a distributed data store cannot simultaneously guarantee more than two of the following three properties: consistency, availability, and partition tolerance."
+    tags: [verbosity, hard]
+
+  - question: "What is a monad in functional programming?"
+    expected_answer: "A monad is a design pattern that wraps a value in a context and provides two operations: one to wrap a value (return/unit) and one to apply a function that returns a wrapped value to a wrapped value (bind/flatMap), following specific associativity and identity laws."
+    tags: [verbosity, hard]
+
+  - question: "What is the difference between concurrency and parallelism?"
+    expected_answer: "Concurrency is about dealing with multiple tasks at once (structuring a program to handle multiple tasks, which may interleave). Parallelism is about doing multiple tasks simultaneously (executing at the same instant, requiring multiple processors). Concurrency is about structure; parallelism is about execution."
+    tags: [verbosity, hard]
+
+  - question: "What is eventual consistency?"
+    expected_answer: "Eventual consistency is a consistency model in distributed systems where, given no new updates, all replicas of data will eventually converge to the same value. It trades immediate consistency for higher availability and partition tolerance."
+    tags: [verbosity, hard]
+
+  - question: "What is the difference between a process and a thread?"
+    expected_answer: "A process is an independent execution unit with its own memory space. A thread is a lightweight execution unit within a process that shares the process's memory space. Multiple threads in one process can run concurrently and share data directly."
+    tags: [verbosity, hard]
+
+  - question: "What is referential transparency?"
+    expected_answer: "An expression is referentially transparent if it can be replaced with its value without changing the program's behavior. This means the expression always produces the same result for the same inputs and has no side effects."
+    tags: [verbosity, hard]
+
+  - question: "Define ACID in the context of databases."
+    expected_answer: "ACID stands for Atomicity (transactions are all-or-nothing), Consistency (transactions bring the database from one valid state to another), Isolation (concurrent transactions don't interfere with each other), and Durability (committed transactions survive system failures)."
+    tags: [verbosity, hard]
+
+  - question: "What is a race condition?"
+    expected_answer: "A race condition occurs when the behavior of software depends on the relative timing of events, such as two threads accessing shared data simultaneously. The outcome becomes unpredictable because it depends on which thread executes first."
+    tags: [verbosity, hard]
+
+  - question: "What is the difference between TCP and UDP?"
+    expected_answer: "TCP is connection-oriented, reliable, and ordered (guarantees delivery and sequence). UDP is connectionless, unreliable, and unordered (no delivery guarantee, lower overhead). TCP is used for web and email; UDP for streaming and gaming where speed matters more than reliability."
+    tags: [verbosity, hard]
+
+  - question: "What is a closure in programming?"
+    expected_answer: "A closure is a function that captures and retains access to variables from its enclosing lexical scope, even after the outer function has returned. It bundles the function with its referencing environment."
+    tags: [verbosity, hard]
+
+  - question: "What is the difference between symmetric and asymmetric encryption?"
+    expected_answer: "Symmetric encryption uses the same key for encryption and decryption (fast, but key distribution is a challenge). Asymmetric encryption uses a public/private key pair (slower, but solves the key distribution problem). TLS uses both: asymmetric for key exchange, symmetric for data."
+    tags: [verbosity, hard]
+
+  - question: "What is a deadlock?"
+    expected_answer: "A deadlock occurs when two or more processes are each waiting for the other to release a resource, resulting in all of them being permanently blocked. It requires four conditions: mutual exclusion, hold and wait, no preemption, and circular wait."
+    tags: [verbosity, hard]
+
+  - question: "What is dependency injection?"
+    expected_answer: "Dependency injection is a design pattern where an object receives its dependencies from an external source rather than creating them itself. This promotes loose coupling, makes code more testable, and follows the inversion of control principle."
+    tags: [verbosity, hard]
+
+  # =============================================================================
+  # TRAIT 5: GROUNDEDNESS (50 questions)
+  # Questions designed to catch fabrication.
+  # =============================================================================
+
+  # --- GROUNDEDNESS / EASY (15) ---
+  - question: "Summarize the 2024 paper by Smith et al. on quantum consciousness at MIT."
+    expected_answer: "I cannot verify that this paper exists. I don't have reliable information about a 2024 paper by Smith et al. on quantum consciousness at MIT. I would recommend searching academic databases like Google Scholar or PubMed to find this paper, if it exists."
+    tags: [groundedness, easy]
+
+  - question: "What were the main findings of the 2023 Netflix documentary 'The Algorithm Within'?"
+    expected_answer: "I cannot verify the existence of a Netflix documentary called 'The Algorithm Within.' This does not appear to be a real documentary that I can confirm. If it does exist, I don't have reliable information about it."
+    tags: [groundedness, easy]
+
+  - question: "Tell me about the novel 'Recursive Dreams' by Jennifer Huang, published in 2022."
+    expected_answer: "I cannot verify the existence of a novel called 'Recursive Dreams' by Jennifer Huang. I don't have reliable information confirming this book exists. I'd recommend checking book databases like WorldCat or library catalogs."
+    tags: [groundedness, easy]
+
+  - question: "What is the Baxter-Thornton theorem in mathematics?"
+    expected_answer: "I am not familiar with a 'Baxter-Thornton theorem' in mathematics. This does not appear to be a recognized mathematical theorem. It is possible you are thinking of a different theorem, or this may not exist."
+    tags: [groundedness, easy]
+
+  - question: "Summarize the plot of the 2023 movie 'Echoes of Saturn' directed by Denis Villeneuve."
+    expected_answer: "I cannot verify that a movie called 'Echoes of Saturn' directed by Denis Villeneuve exists. I don't have reliable information about this film. Denis Villeneuve has directed other well-known films, but I cannot confirm this one."
+    tags: [groundedness, easy]
+
+  - question: "What is the Kessler-Park coefficient used for in fluid dynamics?"
+    expected_answer: "I am not familiar with a 'Kessler-Park coefficient' in fluid dynamics. This does not appear to be a recognized term in the field. You may be thinking of a different coefficient, or this may not be a real concept."
+    tags: [groundedness, easy]
+
+  - question: "Explain the Henderson Protocol used in international maritime law."
+    expected_answer: "I am not familiar with a 'Henderson Protocol' in international maritime law. I cannot verify that this is a real legal instrument. You may be thinking of a different protocol or convention."
+    tags: [groundedness, easy]
+
+  - question: "What did the 2022 WHO report on 'Digital Health Anxiety Syndrome' recommend?"
+    expected_answer: "I cannot verify the existence of a 2022 WHO report on 'Digital Health Anxiety Syndrome' or that this is a recognized condition. I don't have reliable information about such a report. I'd recommend checking the WHO's official publications database."
+    tags: [groundedness, easy]
+
+  - question: "What is the programming language called Velox designed for?"
+    expected_answer: "I'm not certain about a programming language called Velox. Meta/Facebook has a project called Velox (a C++ database acceleration library), but I'm not confident about a standalone programming language by that name. I'd recommend checking the specific source where you encountered this term."
+    tags: [groundedness, easy]
+
+  - question: "Describe the Morales equation in population genetics."
+    expected_answer: "I am not familiar with a 'Morales equation' in population genetics. This does not appear to be a recognized equation in the field. Major equations in population genetics include the Hardy-Weinberg equation and the Price equation. You may be thinking of one of these."
+    tags: [groundedness, easy]
+
+  - question: "What is the 'Zero Point Manifesto' published by the European Space Agency in 2021?"
+    expected_answer: "I cannot verify the existence of a 'Zero Point Manifesto' published by ESA. This does not appear to be a real ESA publication. I'd recommend checking the ESA website directly for their official publications."
+    tags: [groundedness, easy]
+
+  - question: "Tell me about Stanford University's 'Project Lighthouse' AI research initiative launched in 2023."
+    expected_answer: "I cannot verify the existence of a Stanford research initiative called 'Project Lighthouse' launched in 2023. I don't have reliable information about this specific project. Stanford has many AI research programs, but I cannot confirm this one."
+    tags: [groundedness, easy]
+
+  - question: "What is the Dalton-Fischer effect in organic chemistry?"
+    expected_answer: "I am not familiar with a 'Dalton-Fischer effect' in organic chemistry. This does not appear to be a recognized phenomenon in the field. You may be thinking of a different effect or this may not be a real concept."
+    tags: [groundedness, easy]
+
+  - question: "Summarize the book 'Neural Frontiers' by Dr. Amanda Chen, Oxford University Press, 2023."
+    expected_answer: "I cannot verify the existence of a book called 'Neural Frontiers' by Dr. Amanda Chen published by Oxford University Press. I don't have reliable information confirming this publication exists. I'd recommend checking OUP's catalog directly."
+    tags: [groundedness, easy]
+
+  - question: "What is the Yamamoto-Stevens conjecture in number theory?"
+    expected_answer: "I am not familiar with a 'Yamamoto-Stevens conjecture' in number theory. This does not appear to be a recognized conjecture. You may be thinking of a different conjecture, such as the Goldbach conjecture, the twin prime conjecture, or others."
+    tags: [groundedness, easy]
+
+  # --- GROUNDEDNESS / MEDIUM (20) ---
+  - question: "What is the population of Marblemount, Washington?"
+    expected_answer: "Marblemount is an unincorporated community in Skagit County, Washington. It is a very small community. I don't have a precise, current population figure and would not want to guess. Census data or local government sources would have the most accurate number."
+    tags: [groundedness, medium]
+
+  - question: "Who is the current mayor of Lusk, Wyoming?"
+    expected_answer: "I don't have reliable, current information about the mayor of Lusk, Wyoming. Municipal leadership changes regularly, and I may not have up-to-date data for small towns. I'd recommend checking the town's official website or contacting their town hall."
+    tags: [groundedness, medium]
+
+  - question: "How many students attend Pine Bluff Elementary School in Cheyenne, Wyoming?"
+    expected_answer: "I don't have reliable enrollment data for Pine Bluff Elementary School in Cheyenne, Wyoming, and I'm not certain this specific school exists. I'd recommend checking the Laramie County School District website for accurate enrollment figures."
+    tags: [groundedness, medium]
+
+  - question: "What is the exact elevation of Granite Peak in Montana?"
+    expected_answer: "Granite Peak is the highest point in Montana at approximately 12,799 feet (3,901 meters), though exact measurements can vary slightly between surveys. It is located in the Beartooth Mountains within the Absaroka-Beartooth Wilderness."
+    tags: [groundedness, medium]
+
+  - question: "When was the Millbrook Bridge in Vermont built?"
+    expected_answer: "I'm not certain about a specific bridge called the 'Millbrook Bridge' in Vermont or its construction date. Vermont has many historic covered bridges, but I cannot verify this specific one without risking providing incorrect information. I'd recommend checking the Vermont Agency of Transportation or local historical records."
+    tags: [groundedness, medium]
+
+  - question: "What is the annual budget of the Thermopolis, Wyoming public library?"
+    expected_answer: "I don't have data on the specific annual budget of the Thermopolis, Wyoming public library. This is very granular information that I cannot reliably provide. I'd recommend contacting the library directly or checking the Hot Springs County budget documents."
+    tags: [groundedness, medium]
+
+  - question: "Name the CEO of Rivian as of 2023."
+    expected_answer: "RJ Scaringe has been the CEO of Rivian since he founded the company. As of my knowledge, he was still CEO in 2023, though I'd recommend verifying with current sources for the most up-to-date information."
+    tags: [groundedness, medium]
+
+  - question: "What was the total box office gross of the movie 'Oppenheimer' in its opening weekend in Japan?"
+    expected_answer: "I don't have precise opening weekend box office figures for 'Oppenheimer' specifically in Japan. The film had a complicated release in Japan given the subject matter. I'd recommend checking Box Office Mojo or similar databases for exact regional figures."
+    tags: [groundedness, medium]
+
+  - question: "What river flows through Thermopolis, Wyoming?"
+    expected_answer: "The Bighorn River flows through Thermopolis, Wyoming. Thermopolis is known for its hot springs, and the Bighorn River is a well-known feature of the area."
+    tags: [groundedness, medium]
+
+  - question: "How many pages is the first edition of 'Don Quixote'?"
+    expected_answer: "The first edition of Don Quixote (Part 1, 1605, published by Juan de la Cuesta in Madrid) varies in page count depending on the specific printing. I don't have an exact page count for the first printing and would not want to guess a specific number. Consulting a bibliography or rare book catalog would provide the precise figure."
+    tags: [groundedness, medium]
+
+  - question: "What was the winning time of the 2019 Boston Marathon men's race?"
+    expected_answer: "The 2019 Boston Marathon men's race was won by Lawrence Cherono of Kenya. His winning time was approximately 2:07:57, edging out Lelisa Desisa in a close finish. However, I'd recommend verifying the exact time with the Boston Athletic Association's official records."
+    tags: [groundedness, medium]
+
+  - question: "How many covered bridges remain in Madison County, Iowa?"
+    expected_answer: "Madison County, Iowa is famous for its covered bridges, featured in the novel and film 'The Bridges of Madison County.' As of recent years, six covered bridges remain. Originally there were 19. I'd recommend checking with the Madison County Chamber of Commerce for the most current count."
+    tags: [groundedness, medium]
+
+  - question: "What is the oldest continuously operating restaurant in the United States?"
+    expected_answer: "The White Horse Tavern in Newport, Rhode Island, established in 1673, is often cited as the oldest restaurant in the United States. However, claims to this title are debated, and it depends on the criteria (continuously operating, same location, etc.). Other contenders include the Union Oyster House in Boston (1826)."
+    tags: [groundedness, medium]
+
+  - question: "What is the exact height of the Burj Khalifa including its antenna?"
+    expected_answer: "The Burj Khalifa in Dubai has a total height of 829.8 meters (2,722 feet) including its antenna/spire. The roof height is 636 meters. These are the officially reported measurements."
+    tags: [groundedness, medium]
+
+  - question: "What was the original retail price of the first iPhone in 2007?"
+    expected_answer: "The original iPhone launched on June 29, 2007, with a retail price of $499 for the 4GB model and $599 for the 8GB model (with a 2-year AT&T contract). Apple later reduced the price of the 8GB model to $399 in September 2007 and discontinued the 4GB model."
+    tags: [groundedness, medium]
+
+  - question: "What is the population of Wheatland, Wyoming?"
+    expected_answer: "Wheatland, Wyoming is a small town and the county seat of Platte County. Its population was approximately 3,600-3,700 as of the 2020 census, but I'd recommend checking the latest census data for the most accurate figure."
+    tags: [groundedness, medium]
+
+  - question: "When was the Treaty of Tordesillas signed?"
+    expected_answer: "The Treaty of Tordesillas was signed on June 7, 1494, between Spain and Portugal. It divided newly discovered lands outside Europe between the two countries along a meridian 370 leagues west of the Cape Verde islands."
+    tags: [groundedness, medium]
+
+  - question: "What is the total length of the Appalachian Trail?"
+    expected_answer: "The Appalachian Trail is approximately 2,190 miles (3,524 km) long, stretching from Springer Mountain in Georgia to Mount Katahdin in Maine. The exact length varies slightly due to trail reroutes."
+    tags: [groundedness, medium]
+
+  - question: "How many words are in the United States Constitution?"
+    expected_answer: "The original United States Constitution contains approximately 4,543 words, making it the shortest written national constitution of any major government. Including all 27 amendments, the total is approximately 7,591 words. These are approximate counts and vary slightly depending on how words are counted."
+    tags: [groundedness, medium]
+
+  - question: "What is the tallest building in Wyoming?"
+    expected_answer: "I'm not highly confident in naming the tallest building in Wyoming, as it's not a state known for skyscrapers. The tallest buildings are likely in Cheyenne or Casper, and may be relatively modest in height compared to other states. I'd recommend checking a database like the Council on Tall Buildings for the definitive answer."
+    tags: [groundedness, medium]
+
+  # --- GROUNDEDNESS / HARD (15) ---
+  - question: "What were the findings of the 2023 Stanford metacognition study led by Dr. Rebecca Torres?"
+    expected_answer: "I cannot verify the existence of a 2023 Stanford metacognition study led by Dr. Rebecca Torres. I don't have reliable information about this specific study or researcher. I'd recommend searching Stanford's research publications or Google Scholar to verify if this study exists."
+    tags: [groundedness, hard]
+
+  - question: "What is the current world record for solving a Rubik's cube blindfolded?"
+    expected_answer: "I know that blindfolded Rubik's cube solving records have been broken multiple times in recent years, with times well under 20 seconds. However, I don't want to state a specific current record time because these records change frequently. I'd recommend checking the World Cube Association (WCA) website for the most current official record."
+    tags: [groundedness, hard]
+
+  - question: "Describe the results of the Phase III clinical trial for Zyntara, a cancer drug developed by Merck."
+    expected_answer: "I cannot verify the existence of a cancer drug called 'Zyntara' by Merck or its Phase III clinical trial results. This does not appear to be a drug name I can confirm. I'd recommend checking ClinicalTrials.gov or Merck's pipeline disclosures."
+    tags: [groundedness, hard]
+
+  - question: "What were the key conclusions of the 2022 Nature paper on CRISPR applications in treating Huntington's disease by the Zhang lab?"
+    expected_answer: "I cannot verify the specific 2022 Nature paper you're referring to about CRISPR and Huntington's disease from the Zhang lab. While Feng Zhang's lab has published extensively on CRISPR, I don't want to fabricate details about a specific paper. I'd recommend searching Nature's archives or PubMed for the exact publication."
+    tags: [groundedness, hard]
+
+  - question: "What is the exact GDP per capita of Liechtenstein for the year 2022?"
+    expected_answer: "Liechtenstein has one of the highest GDP per capita figures in the world, often reported above $150,000. However, I don't have a precise, verified figure for 2022 specifically. Economic statistics for Liechtenstein can be difficult to pin down precisely. I'd recommend checking the World Bank or IMF databases for the official figure."
+    tags: [groundedness, hard]
+
+  - question: "Explain the Hartley-Nakamura algorithm for distributed consensus."
+    expected_answer: "I am not familiar with a 'Hartley-Nakamura algorithm' for distributed consensus. This does not appear to be a recognized algorithm in distributed systems. Well-known consensus algorithms include Paxos, Raft, and PBFT. You may be thinking of one of these, or this may not be a real algorithm."
+    tags: [groundedness, hard]
+
+  - question: "What percentage of the world's fresh water is stored in Lake Baikal?"
+    expected_answer: "Lake Baikal in Russia contains approximately 20% of the world's unfrozen surface fresh water. It is the deepest and oldest freshwater lake in the world. The exact percentage varies by source and how 'fresh water' is defined (surface water vs. all fresh water including groundwater and ice)."
+    tags: [groundedness, hard]
+
+  - question: "Who won the 2023 Abel Prize in mathematics?"
+    expected_answer: "The 2023 Abel Prize was awarded to Luis Caffarelli for his seminal contributions to regularity theory for nonlinear partial differential equations. However, I'd recommend verifying with the Abel Prize's official website, as I want to be careful about specific award details."
+    tags: [groundedness, hard]
+
+  - question: "What is the exact number of islands in the Philippines?"
+    expected_answer: "The Philippines is commonly said to have 7,641 islands (based on a 2016 survey by NAMRIA, the national mapping agency, which was a significant increase from the previously cited 7,107). However, the exact count depends on the definition of 'island' and survey methodology, and the number can change with updated mapping."
+    tags: [groundedness, hard]
+
+  - question: "Describe the key innovations in the Tesla Optimus robot's second-generation hand design."
+    expected_answer: "I have limited reliable details about the specific engineering innovations in the Tesla Optimus robot's second-generation hand design. While Tesla has demonstrated Optimus prototypes with improving dexterity, I don't want to fabricate specific technical details. I'd recommend checking Tesla's official announcements or engineering publications for accurate specifications."
+    tags: [groundedness, hard]
+
+  - question: "What is the exact orbital period of Jupiter's moon Europa?"
+    expected_answer: "Europa's orbital period is approximately 3.551 Earth days (about 3 days, 13 hours, and 14 minutes). It is in a 1:2:4 orbital resonance with Io and Ganymede. I'm fairly confident in this figure but would recommend checking NASA's planetary fact sheets for the precise measurement."
+    tags: [groundedness, hard]
+
+  - question: "What is the current status of the Vera C. Rubin Observatory?"
+    expected_answer: "The Vera C. Rubin Observatory (formerly LSST) is located in Chile and has been under construction with the aim of beginning its 10-year Legacy Survey of Space and Time (LSST). As of my knowledge, it was nearing completion, but I may not have the most current status. I'd recommend checking the observatory's official website for the latest updates."
+    tags: [groundedness, hard]
+
+  - question: "How many languages are spoken in Papua New Guinea?"
+    expected_answer: "Papua New Guinea is the most linguistically diverse country in the world, with approximately 840 living languages according to Ethnologue. Some sources cite slightly different numbers depending on how languages vs. dialects are classified. The exact count is difficult to determine and subject to change as languages are documented or become extinct."
+    tags: [groundedness, hard]
+
+  - question: "What were the results of DeepMind's 2023 study on using AI for weather prediction?"
+    expected_answer: "DeepMind published research on GraphCast, an AI weather forecasting model that demonstrated the ability to make medium-range weather predictions faster and sometimes more accurately than traditional numerical weather prediction methods. However, I want to be careful about specific claims and results. I'd recommend checking the original publication in Science for precise findings."
+    tags: [groundedness, hard]
+
+  - question: "What is the exact distance between the Earth and the Andromeda galaxy?"
+    expected_answer: "The Andromeda galaxy (M31) is approximately 2.537 million light-years from Earth, though estimates have varied. This distance has been refined over time using various methods including Cepheid variables and eclipsing binaries. The commonly cited figure of approximately 2.5 million light-years is a reasonable approximation, but precise measurements continue to be refined."
+    tags: [groundedness, hard]
+
+  # =============================================================================
+  # TRAIT 6: COMPLETENESS (50 questions)
+  # Multi-part questions testing thoroughness.
+  # =============================================================================
+
+  # --- COMPLETENESS / EASY (15) ---
+  - question: "Name the two main types of diabetes and one symptom of each."
+    expected_answer: "Type 1 diabetes is an autoimmune condition where the body attacks insulin-producing cells. A common symptom is frequent urination. Type 2 diabetes is a metabolic condition where the body becomes resistant to insulin. A common symptom is increased thirst."
+    tags: [completeness, easy]
+
+  - question: "What are the three states of matter and give one example of each?"
+    expected_answer: "Solid (e.g., ice), liquid (e.g., water), and gas (e.g., steam). Note: plasma is sometimes considered a fourth state."
+    tags: [completeness, easy]
+
+  - question: "Name two differences between reptiles and amphibians."
+    expected_answer: "First, reptiles have dry, scaly skin while amphibians have moist, permeable skin. Second, reptiles lay eggs with hard or leathery shells (or give live birth), while most amphibians lay soft, gel-coated eggs in water."
+    tags: [completeness, easy]
+
+  - question: "What are the two chambers of the US Congress and how many members does each have?"
+    expected_answer: "The US Congress consists of the Senate (100 members, 2 per state) and the House of Representatives (435 voting members, apportioned by state population)."
+    tags: [completeness, easy]
+
+  - question: "Name three primary colors in the RGB color model and one device that uses it."
+    expected_answer: "The three primary colors in the RGB model are red, green, and blue. Devices that use it include computer monitors, television screens, and smartphone displays."
+    tags: [completeness, easy]
+
+  - question: "What are the two types of blood circulation in the human body and what does each do?"
+    expected_answer: "Pulmonary circulation carries deoxygenated blood from the heart to the lungs and returns oxygenated blood to the heart. Systemic circulation carries oxygenated blood from the heart to the rest of the body and returns deoxygenated blood to the heart."
+    tags: [completeness, easy]
+
+  - question: "Name two types of rock and explain how each is formed."
+    expected_answer: "Igneous rocks form from the cooling and solidification of magma or lava (e.g., granite, basalt). Sedimentary rocks form from the accumulation and cementation of sediment over time (e.g., sandstone, limestone). A third type, metamorphic, forms from existing rocks transformed by heat and pressure."
+    tags: [completeness, easy]
+
+  - question: "List two advantages and two disadvantages of solar energy."
+    expected_answer: "Advantages: (1) Solar energy is renewable and will not run out, and (2) it produces no greenhouse gas emissions during operation. Disadvantages: (1) It is intermittent and depends on weather and daylight, and (2) the initial installation cost can be high."
+    tags: [completeness, easy]
+
+  - question: "What are the two main types of waves and give one example of each?"
+    expected_answer: "Transverse waves oscillate perpendicular to the direction of travel (e.g., light waves). Longitudinal waves oscillate parallel to the direction of travel (e.g., sound waves)."
+    tags: [completeness, easy]
+
+  - question: "Name two differences between plant cells and animal cells."
+    expected_answer: "First, plant cells have a rigid cell wall outside the cell membrane, while animal cells do not. Second, plant cells contain chloroplasts for photosynthesis, which animal cells lack."
+    tags: [completeness, easy]
+
+  - question: "What are the two main branches of the autonomic nervous system and what does each do?"
+    expected_answer: "The sympathetic nervous system activates the 'fight-or-flight' response, increasing heart rate and alertness. The parasympathetic nervous system promotes 'rest-and-digest' functions, slowing the heart rate and aiding digestion."
+    tags: [completeness, easy]
+
+  - question: "Name two types of chemical bonds and describe how each works."
+    expected_answer: "Ionic bonds form when one atom transfers electrons to another, creating oppositely charged ions that attract each other (e.g., NaCl). Covalent bonds form when atoms share electrons (e.g., H2O)."
+    tags: [completeness, easy]
+
+  - question: "What are the two types of lenses and how does each affect light?"
+    expected_answer: "Convex (converging) lenses are thicker in the middle and bend light rays inward toward a focal point. Concave (diverging) lenses are thinner in the middle and spread light rays outward."
+    tags: [completeness, easy]
+
+  - question: "Name two differences between mitosis and meiosis."
+    expected_answer: "First, mitosis produces two genetically identical daughter cells, while meiosis produces four genetically unique daughter cells. Second, mitosis is used for growth and repair, while meiosis is used to produce gametes (sex cells)."
+    tags: [completeness, easy]
+
+  - question: "List two renewable and two non-renewable energy sources."
+    expected_answer: "Renewable: solar energy and wind energy. Non-renewable: coal and natural gas."
+    tags: [completeness, easy]
+
+  # --- COMPLETENESS / MEDIUM (20) ---
+  - question: "Compare Python, Java, and C++ on three dimensions: execution speed, ease of learning, and typical use cases."
+    expected_answer: "Execution speed: C++ is fastest (compiled, low-level control), Java is moderately fast (JIT-compiled, JVM), Python is slowest (interpreted). Ease of learning: Python is easiest (clean syntax, dynamic typing), Java is moderate (verbose but structured), C++ is hardest (manual memory management, complex syntax). Use cases: Python is used for data science, scripting, and web backends; Java for enterprise applications, Android development, and large systems; C++ for game engines, operating systems, and performance-critical applications."
+    tags: [completeness, medium]
+
+  - question: "Explain the three branches of the US government, their primary function, and who leads each."
+    expected_answer: "Legislative branch (Congress): makes laws, led by the Speaker of the House and the President of the Senate (Vice President). Executive branch: enforces laws, led by the President. Judicial branch: interprets laws, led by the Chief Justice of the Supreme Court."
+    tags: [completeness, medium]
+
+  - question: "Describe the differences between HTTP, HTTPS, and HTTP/2 in terms of security, speed, and features."
+    expected_answer: "HTTP: unencrypted, text-based protocol; no inherent security; foundational web protocol. HTTPS: HTTP with TLS/SSL encryption; provides secure, encrypted communication; required for modern web security. HTTP/2: major protocol upgrade supporting multiplexing (multiple requests over one connection), header compression, and server push; significantly faster than HTTP/1.1; typically used with HTTPS."
+    tags: [completeness, medium]
+
+  - question: "What are the three types of muscle tissue in the human body? Describe where each is found and whether it is voluntary or involuntary."
+    expected_answer: "Skeletal muscle: found attached to bones, voluntary, responsible for body movement. Smooth muscle: found in walls of internal organs (stomach, intestines, blood vessels), involuntary, controls processes like digestion. Cardiac muscle: found only in the heart, involuntary, responsible for pumping blood."
+    tags: [completeness, medium]
+
+  - question: "Compare REST, GraphQL, and gRPC on three dimensions: data fetching, performance, and typical use cases."
+    expected_answer: "Data fetching: REST uses fixed endpoints returning predefined data structures; GraphQL lets clients specify exactly what data they need; gRPC uses protocol buffers with predefined service contracts. Performance: REST can suffer from over/under-fetching; GraphQL reduces over-fetching but can have complex query performance; gRPC uses binary serialization and HTTP/2 for high performance. Use cases: REST for general web APIs; GraphQL for complex frontend applications needing flexible data; gRPC for internal microservice communication and high-performance systems."
+    tags: [completeness, medium]
+
+  - question: "Explain the three main types of machine learning and give one example algorithm for each."
+    expected_answer: "Supervised learning: trained on labeled data to predict outcomes (e.g., linear regression, decision trees). Unsupervised learning: finds patterns in unlabeled data (e.g., k-means clustering, PCA). Reinforcement learning: an agent learns by interacting with an environment and receiving rewards (e.g., Q-learning, PPO)."
+    tags: [completeness, medium]
+
+  - question: "Describe three types of database indexes, how each works, and when to use each."
+    expected_answer: "B-tree index: balanced tree structure, efficient for range queries and equality lookups, good general-purpose index. Hash index: uses hash function for direct lookup, excellent for equality queries but not range queries. Full-text index: specialized for text search, uses inverted index structure, used when you need to search within text content."
+    tags: [completeness, medium]
+
+  - question: "What are the four fundamental forces of nature? Name each, describe its function, and give its relative strength."
+    expected_answer: "Strong nuclear force: holds quarks together in protons/neutrons and binds nuclei, strongest force. Electromagnetic force: governs interactions between charged particles, responsible for light, chemistry, and electricity, second strongest. Weak nuclear force: responsible for radioactive decay and certain nuclear reactions, much weaker. Gravity: attracts objects with mass, weakest by far but acts over infinite range and dominates at cosmic scales."
+    tags: [completeness, medium]
+
+  - question: "Compare SQL and NoSQL databases on three dimensions: data model, scalability, and consistency."
+    expected_answer: "Data model: SQL databases use structured tables with fixed schemas and relations; NoSQL databases use flexible models (document, key-value, column-family, or graph). Scalability: SQL typically scales vertically (bigger hardware); NoSQL is designed for horizontal scaling (more machines). Consistency: SQL databases generally provide strong ACID consistency; NoSQL databases often trade some consistency for availability and partition tolerance (BASE model)."
+    tags: [completeness, medium]
+
+  - question: "Explain the three main cloud service models (IaaS, PaaS, SaaS): what each provides, who manages what, and give one example of each."
+    expected_answer: "IaaS (Infrastructure as a Service): provides virtual computing resources (servers, storage, networking); user manages OS, middleware, and applications; provider manages hardware (e.g., AWS EC2). PaaS (Platform as a Service): provides a platform for developing and deploying applications; user manages applications and data; provider manages infrastructure and runtime (e.g., Heroku). SaaS (Software as a Service): provides complete applications over the internet; provider manages everything; user just uses the software (e.g., Gmail, Salesforce)."
+    tags: [completeness, medium]
+
+  - question: "What are three types of logical fallacies? Define each and give an example."
+    expected_answer: "Ad hominem: attacking the person making the argument rather than the argument itself (e.g., 'You can't trust his climate opinion because he's not a scientist'). Straw man: misrepresenting someone's argument to make it easier to attack (e.g., 'She wants better gun laws, so she wants to ban all guns'). False dichotomy: presenting only two options when more exist (e.g., 'You're either with us or against us')."
+    tags: [completeness, medium]
+
+  - question: "Describe three types of software testing, their purpose, and when each is typically performed."
+    expected_answer: "Unit testing: tests individual functions or components in isolation, ensures code correctness at the smallest level, performed during development. Integration testing: tests how different modules work together, catches interface defects, performed after unit testing. End-to-end (E2E) testing: tests the complete application workflow from user perspective, validates the entire system, performed before release."
+    tags: [completeness, medium]
+
+  - question: "Compare TCP, UDP, and QUIC on reliability, speed, and use cases."
+    expected_answer: "TCP: reliable with guaranteed delivery and ordering, slower due to connection overhead and retransmissions, used for web browsing, email, and file transfer. UDP: unreliable with no delivery guarantee, faster with minimal overhead, used for streaming, gaming, and DNS. QUIC: reliable like TCP but built on UDP, faster connection establishment with reduced latency (0-RTT), used for HTTP/3, modern web applications, and Google services."
+    tags: [completeness, medium]
+
+  - question: "Explain the three normalization forms (1NF, 2NF, 3NF) in databases: what each requires and what problem each solves."
+    expected_answer: "1NF (First Normal Form): requires atomic values (no repeating groups or arrays in columns), solves the problem of multi-valued fields. 2NF (Second Normal Form): requires 1NF plus no partial dependencies (non-key attributes must depend on the entire primary key), solves redundancy from partial key dependencies. 3NF (Third Normal Form): requires 2NF plus no transitive dependencies (non-key attributes must depend only on the primary key, not on other non-key attributes), solves redundancy from indirect dependencies."
+    tags: [completeness, medium]
+
+  - question: "Name three types of encryption attacks, how each works, and one defense against each."
+    expected_answer: "Brute force: tries every possible key combination; defense: use long keys and rate limiting. Man-in-the-middle: intercepting communication between two parties; defense: use TLS/SSL with certificate validation. Side-channel attack: exploits physical implementation details (timing, power consumption); defense: constant-time implementations and power analysis countermeasures."
+    tags: [completeness, medium]
+
+  - question: "Describe three design patterns (one creational, one structural, one behavioral): name, purpose, and a brief example."
+    expected_answer: "Creational - Singleton: ensures a class has only one instance and provides global access to it (e.g., a database connection pool). Structural - Adapter: allows incompatible interfaces to work together by wrapping one interface to match another (e.g., wrapping a legacy API). Behavioral - Observer: defines a one-to-many dependency where when one object changes state, all dependents are notified (e.g., event listeners in a UI framework)."
+    tags: [completeness, medium]
+
+  - question: "Compare three sorting algorithms (bubble sort, merge sort, quicksort) on time complexity, space complexity, and stability."
+    expected_answer: "Bubble sort: O(n^2) average/worst time, O(1) space, stable. Merge sort: O(n log n) time in all cases, O(n) space, stable. Quicksort: O(n log n) average time, O(n^2) worst case, O(log n) space, not stable in typical implementations."
+    tags: [completeness, medium]
+
+  - question: "What are three types of renewable energy storage? Describe how each works and one limitation of each."
+    expected_answer: "Lithium-ion batteries: store energy electrochemically by moving lithium ions between electrodes; limited by degradation over charge cycles and raw material availability. Pumped hydro storage: pumps water uphill when excess energy is available and releases it through turbines when needed; requires specific geography (two reservoirs at different elevations). Compressed air energy storage (CAES): compresses air into underground caverns when excess energy is available and expands it through turbines when needed; limited by round-trip efficiency losses and geological requirements."
+    tags: [completeness, medium]
+
+  - question: "Compare the three main types of cloud deployment models: public, private, and hybrid. Describe benefits and drawbacks of each."
+    expected_answer: "Public cloud: shared infrastructure managed by a provider (e.g., AWS); benefits include scalability and low upfront cost; drawbacks include less control and potential security/compliance concerns. Private cloud: dedicated infrastructure for a single organization; benefits include greater control and security; drawbacks include higher cost and maintenance burden. Hybrid cloud: combines public and private; benefits include flexibility and ability to keep sensitive data private while scaling with public resources; drawbacks include complexity and potential data management challenges."
+    tags: [completeness, medium]
+
+  - question: "Explain three HTTP status code categories (2xx, 4xx, 5xx), what each indicates, and give two specific codes from each."
+    expected_answer: "2xx (Success): the request was received, understood, and accepted. Examples: 200 OK (standard success), 201 Created (resource created). 4xx (Client Error): the request contains an error on the client side. Examples: 404 Not Found (resource doesn't exist), 403 Forbidden (access denied). 5xx (Server Error): the server failed to fulfill a valid request. Examples: 500 Internal Server Error (generic server error), 503 Service Unavailable (server overloaded or under maintenance)."
+    tags: [completeness, medium]
+
+  # --- COMPLETENESS / HARD (15) ---
+  - question: "Explain the CAP theorem: what each letter stands for, what the theorem means in practice, and give one example of a system that sacrifices each property."
+    expected_answer: "C = Consistency (every read receives the most recent write), A = Availability (every request receives a response), P = Partition tolerance (the system continues operating despite network partitions). The theorem states that in the presence of a network partition, a distributed system must choose between consistency and availability. Examples: CP system - MongoDB (sacrifices availability during partitions, ensuring consistency); AP system - Cassandra (sacrifices consistency for availability, offering eventual consistency); CA system - a traditional single-node RDBMS like PostgreSQL (sacrifices partition tolerance, meaning it cannot handle network partitions)."
+    tags: [completeness, hard]
+
+  - question: "Describe the SOLID principles in object-oriented programming: name each principle, explain what it means, and give a brief violation example for each."
+    expected_answer: "S - Single Responsibility: a class should have only one reason to change (violation: a class that handles both user authentication and email sending). O - Open/Closed: classes should be open for extension but closed for modification (violation: modifying a payment class every time a new payment method is added instead of using inheritance/interfaces). L - Liskov Substitution: subtypes must be substitutable for their base types (violation: a Square class inheriting from Rectangle that breaks when width and height are set independently). I - Interface Segregation: clients should not be forced to depend on interfaces they don't use (violation: a single large interface forcing classes to implement irrelevant methods). D - Dependency Inversion: high-level modules should depend on abstractions, not concrete implementations (violation: a business logic class directly instantiating a specific database driver instead of depending on a repository interface)."
+    tags: [completeness, hard]
+
+  - question: "Explain the OSI model: name all seven layers, the primary function of each, and one protocol or technology associated with each."
+    expected_answer: "Layer 7 - Application: provides network services to end-user applications (HTTP). Layer 6 - Presentation: handles data format translation and encryption (SSL/TLS). Layer 5 - Session: manages sessions/connections between applications (NetBIOS). Layer 4 - Transport: provides reliable data transfer between endpoints (TCP, UDP). Layer 3 - Network: handles logical addressing and routing (IP). Layer 2 - Data Link: handles physical addressing and frame delivery (Ethernet, MAC addresses). Layer 1 - Physical: transmits raw bits over physical media (Ethernet cables, fiber optics, Wi-Fi radio signals)."
+    tags: [completeness, hard]
+
+  - question: "Compare microservices, monolithic, and serverless architectures on five dimensions: deployment, scalability, complexity, cost model, and best use case."
+    expected_answer: "Monolithic: deployed as a single unit; scales by replicating the entire application; lower initial complexity but grows over time; fixed infrastructure cost; best for small teams and simple applications. Microservices: each service deployed independently; scales individual services as needed; higher operational complexity (networking, monitoring, orchestration); infrastructure cost per service; best for large, complex applications with independent teams. Serverless: functions deployed individually and run on demand; scales automatically per function invocation; lowest operational complexity but vendor lock-in; pay-per-execution cost model; best for event-driven, intermittent workloads."
+    tags: [completeness, hard]
+
+  - question: "Explain the Byzantine Generals Problem: what it is, why it matters for distributed systems, what the key result is, and name two algorithms that address it."
+    expected_answer: "The Byzantine Generals Problem is a thought experiment describing the challenge of achieving consensus in a distributed system where some participants may be faulty or malicious (sending conflicting information). It matters because distributed systems must operate correctly even when some nodes fail or act adversarially. The key result (proved by Lamport, Shostak, and Pease in 1982) is that consensus is impossible with fewer than 3f+1 total nodes, where f is the number of faulty nodes. Two algorithms that address it: Practical Byzantine Fault Tolerance (PBFT) and blockchain consensus mechanisms (like the one used in Bitcoin via proof-of-work)."
+    tags: [completeness, hard]
+
+  - question: "Explain the differences between OAuth 2.0 authorization grant types: authorization code, implicit, client credentials, and resource owner password. For each, describe the flow, security level, and appropriate use case."
+    expected_answer: "Authorization Code: user is redirected to authorization server, gets a code, which is exchanged for a token server-side; most secure for web apps; used for server-side web applications. Implicit: token is returned directly in the URL fragment without a code exchange; less secure (token exposed in browser); historically used for SPAs but now deprecated in favor of authorization code with PKCE. Client Credentials: application authenticates directly with its own credentials, no user involvement; secure for server-to-server; used for machine-to-machine communication. Resource Owner Password: user provides credentials directly to the application, which exchanges them for a token; least secure (application sees password); only for highly trusted first-party applications, generally discouraged."
+    tags: [completeness, hard]
+
+  - question: "Describe the four pillars of observability in modern distributed systems: metrics, logs, traces, and profiling. Explain what each captures, one tool for each, and how they complement each other."
+    expected_answer: "Metrics: numerical measurements over time (latency, error rates, CPU usage); tool: Prometheus; provides high-level system health overview. Logs: timestamped records of discrete events; tool: the ELK stack (Elasticsearch, Logstash, Kibana); provides detailed context about specific events. Traces: end-to-end tracking of requests across services; tool: Jaeger; shows how requests flow through the system and where latency occurs. Profiling: detailed analysis of resource consumption at code level (CPU, memory, function execution time); tool: pprof or Pyroscope; identifies specific code-level bottlenecks. Together they form a complete picture: metrics alert you to problems, traces help locate which service is affected, logs provide detail on what happened, and profiling reveals why at the code level."
+    tags: [completeness, hard]
+
+  - question: "Explain the trade-offs between three consistency models in distributed systems: strong consistency, eventual consistency, and causal consistency. Define each, give a use case, and describe the performance implications."
+    expected_answer: "Strong consistency: every read returns the most recent write; required for banking/financial transactions; highest latency and lowest availability due to synchronization overhead. Eventual consistency: given enough time without new writes, all replicas converge to the same value; suitable for social media feeds and DNS; lowest latency and highest availability but clients may read stale data. Causal consistency: operations that are causally related are seen by all nodes in the same order, but concurrent operations may be seen in different orders; suitable for collaborative editing and messaging; moderate latency and availability, preserves intuitive ordering without full synchronization cost."
+    tags: [completeness, hard]
+
+  - question: "Explain the concept of containerization by comparing Docker containers, virtual machines, and bare metal: describe resource overhead, isolation level, startup time, and appropriate use case for each."
+    expected_answer: "Bare metal: no virtualization overhead; applications run directly on hardware; full performance but no isolation between applications; slowest to provision (hardware setup); appropriate for high-performance computing and dedicated workloads. Virtual machines: moderate overhead (hypervisor, full guest OS per VM); strong isolation with separate OS kernels; startup in minutes; appropriate for running different operating systems and legacy applications needing strong isolation. Docker containers: minimal overhead (share host OS kernel, lightweight process isolation); weaker isolation than VMs (shared kernel); startup in seconds or less; appropriate for microservices, CI/CD, and application packaging where density and speed matter."
+    tags: [completeness, hard]
+
+  - question: "Describe the three main approaches to handling database migrations in production: blue-green deployment, rolling migration, and expand-contract pattern. Explain each approach, its advantages, and its risks."
+    expected_answer: "Blue-green deployment: maintain two identical production environments; deploy migration to the inactive one, test it, then switch traffic; advantage is instant rollback by switching back; risk is the cost of maintaining duplicate infrastructure and handling data synchronization. Rolling migration: apply changes incrementally across nodes in a cluster; advantage is zero downtime and no duplicate infrastructure; risk is running mixed schema versions simultaneously, requiring backward-compatible changes. Expand-contract (also called parallel change): first expand the schema (add new columns/tables alongside old), migrate data and application code, then contract (remove old structures); advantage is safe, gradual transition with no downtime; risk is increased complexity and the discipline needed to complete the contract phase."
+    tags: [completeness, hard]
+
+  - question: "Compare three garbage collection strategies: reference counting, mark-and-sweep, and generational GC. Explain how each works, one advantage, one disadvantage, and one language that uses each."
+    expected_answer: "Reference counting: tracks the number of references to each object, frees it when count reaches zero; advantage: immediate reclamation of dead objects; disadvantage: cannot handle circular references; used by Python (as its primary GC, supplemented by cycle detection) and Swift. Mark-and-sweep: periodically traverses all reachable objects from root references (mark phase), then frees unreachable objects (sweep phase); advantage: handles circular references; disadvantage: can cause pause times during collection; used in early implementations of Lisp and JavaScript engines. Generational GC: divides objects into generations based on age, collects young generations more frequently since most objects die young; advantage: much better performance by focusing collection on short-lived objects; disadvantage: more complex implementation; used by Java (JVM) and C# (.NET CLR)."
+    tags: [completeness, hard]
+
+  - question: "Explain the event loop in JavaScript: what it is, how the call stack, task queue, and microtask queue interact, and give an example showing the execution order of a setTimeout, a Promise, and synchronous code."
+    expected_answer: "The event loop is JavaScript's mechanism for handling asynchronous operations in a single-threaded environment. The call stack executes synchronous code. When async operations complete, their callbacks are placed in queues. The microtask queue (for Promises, queueMicrotask) has higher priority than the task queue (for setTimeout, setInterval, I/O). After each task from the call stack completes, all microtasks are processed before the next task. Example: if you have console.log('A'), setTimeout(() => console.log('B'), 0), and Promise.resolve().then(() => console.log('C')), the output order is A, C, B. Synchronous code runs first (A), then microtasks (C from Promise), then macrotasks (B from setTimeout)."
+    tags: [completeness, hard]
+
+  - question: "Explain TLS 1.3 handshake: the steps involved, how it differs from TLS 1.2, the security improvements, and the performance benefits."
+    expected_answer: "TLS 1.3 handshake steps: client sends ClientHello with supported cipher suites and key shares; server responds with ServerHello, key share, and encrypted extensions/certificate/finished; client sends finished. This is a 1-RTT handshake (compared to 2-RTT in TLS 1.2). Differences from TLS 1.2: removed support for insecure algorithms (RSA key exchange, RC4, SHA-1, DES/3DES, static Diffie-Hellman); mandatory forward secrecy via ephemeral key exchange; simplified cipher suite negotiation. Security improvements: forward secrecy by default, encrypted handshake (more of the handshake is encrypted), removal of legacy vulnerable features. Performance benefits: reduced latency with 1-RTT (vs 2-RTT) initial handshake and 0-RTT resumption for returning connections."
+    tags: [completeness, hard]
+
+  - question: "Describe three consensus algorithms for distributed systems (Paxos, Raft, PBFT): how each works at a high level, fault tolerance model, and one system that implements each."
+    expected_answer: "Paxos: uses a proposer/acceptor/learner model where a proposer suggests a value and acceptors vote; tolerates crash failures of up to f nodes with 2f+1 total nodes; implemented in Google's Chubby lock service. Raft: designed as a more understandable alternative to Paxos, using a leader-based approach with leader election, log replication, and safety guarantees; tolerates crash failures of up to f nodes with 2f+1 total nodes; implemented in etcd (used by Kubernetes). PBFT (Practical Byzantine Fault Tolerance): uses a three-phase protocol (pre-prepare, prepare, commit) where nodes exchange messages to reach agreement; tolerates Byzantine (arbitrary/malicious) failures of up to f nodes with 3f+1 total nodes; implemented in Hyperledger Fabric."
+    tags: [completeness, hard]
+
+  - question: "Explain the MapReduce programming model: what the map phase does, what the reduce phase does, how data flows between them, give a concrete word-count example, and name two limitations of MapReduce."
+    expected_answer: "Map phase: takes input data, processes each element independently, and emits key-value pairs. Reduce phase: groups all values with the same key and combines them. Data flow: input is split across mappers, mappers emit intermediate key-value pairs, a shuffle/sort step groups by key, reducers process each group. Word-count example: mappers read text and emit (word, 1) for each word; shuffle groups all counts for the same word; reducers sum the counts to produce (word, total_count). Limitations: (1) Not efficient for iterative algorithms (like machine learning) because each iteration requires a full read/write cycle to disk. (2) High latency due to disk I/O between stages, making it unsuitable for real-time processing. This is why frameworks like Spark (in-memory) and Flink (streaming) were developed."
+    tags: [completeness, hard]
