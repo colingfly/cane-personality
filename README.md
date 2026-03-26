@@ -5,18 +5,24 @@ Behavioral profiling benchmark for LLMs. Profile any model's personality, extrac
 [![PyPI](https://img.shields.io/pypi/v/cane-personality)](https://pypi.org/project/cane-personality/)
 
 ```
-                    INTELLECT-3   OLMo-2   Qwen-2.5   DeepSeek-V3
-Overconfidence         72.1       45.3      68.4        61.7
-Calibration            38.9       67.2      41.8        52.3
-Verbosity              84.3       56.1      91.2        78.6
-Hedging                22.4       48.7      18.9        31.5
-Groundedness           41.2       62.8      44.1        55.9
-Completeness           68.7       71.3      73.2        69.8
+                   Qwen-2.5-72B  OLMo-2-32B  DeepSeek-V3  INTELLECT-3  Qwen-2.5-7B
+Overall Score           90.7        90.5        90.0         88.2         87.5
+Overconfidence           3.8         3.3         6.2          6.8          6.0
+Calibration             92.8        92.4        90.9         89.3         89.3
+Verbosity               93.9        95.9        99.0         97.3         94.8
+Hedging                  9.4         8.5         7.4          7.5         11.1
+Groundedness            90.8        90.6        90.2         88.4         87.5
+Completeness            86.9        86.9        88.9         86.8         83.9
 
-Grade                   D          B         D           C
-Steering Vectors        3          1         3           2
-DPO Pairs Generated    47         12        52          31
+Fails (out of 300)        10          11          19           22           16
+DPO Pairs Generated       11          11          17           21           22
 ```
+
+**DPO Training Results (Qwen-2.5-7B):**
+22 auto-generated DPO pairs, one round of QLoRA training on an RTX 4070 laptop GPU (2h 11m):
+- Fabrication fails: 16 to 7 (down 56%)
+- 9 out of 16 groundedness failures fixed on unseen questions
+- Model learned epistemic humility from 22 examples
 
 ## What it does
 
