@@ -24,6 +24,15 @@ DPO Pairs Generated       11          11          17           21           22
 - 9 out of 16 groundedness failures fixed on unseen questions
 - Model learned epistemic humility from 22 examples
 
+## New in v0.2.0
+
+- **Checkpoint/resume**: interrupted runs pick up where they left off
+- **Embedding cache**: repeated runs skip re-embedding
+- **Better hedging detection**: word boundary matching replaces substring matching
+- **Custom judge prompts**: bring your own scoring rubric
+- **Score validation**: judge scores clamped to 0-100
+- **Progress bars**: optional tqdm support (pip install cane-personality[progress])
+
 ## What it does
 
 300-question behavioral probe suite across 6 personality traits, 3 difficulty tiers. Run it against any model, get three outputs:
@@ -149,6 +158,13 @@ profile.to_html("report.html")
 # Export DPO pairs
 export_dpo_pairs(profile, "pairs.jsonl")
 ```
+
+## Known Limitations
+
+- **Judge quality depends on the scoring model.** Haiku is fast and cheap but may miss nuance. Sonnet or GPT-4o produce more accurate scores.
+- **The 300-question suite is a first release.** Some questions may be too easy for frontier models. Harder adversarial probes are planned for v0.3.
+- **DPO pairs are generated from a single run.** Multiple runs would improve statistical reliability.
+- **Hedging detection uses regex word boundary matching,** which may still have edge cases.
 
 ## Install
 

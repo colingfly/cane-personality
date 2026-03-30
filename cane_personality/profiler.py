@@ -8,6 +8,9 @@ Pipeline:
   -> Behavioral clustering -> Contrastive pair extraction -> Steering vectors
 """
 
+import hashlib
+from pathlib import Path
+
 import numpy as np
 
 from cane_personality.types import (
@@ -23,8 +26,46 @@ from cane_personality.traits import (
 )
 
 
-def embed_texts(texts: list[str], model_name: str = "all-MiniLM-L6-v2") -> np.ndarray:
-    """Embed a list of texts, returning (n, dim) array."""
+def _embedding_cache_dir() -> Path:
+    """Return (and create if needed) the embedding cache directory."""
+    cache_dir = Path.home() / ".cache" / "cane-personality"
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    return cache_dir
+
+
+def _embedding_cache_key(texts: list[str], model_name: str) -> str:
+    """Build a deterministic hash from the text list and model name."""
+    h = hashlib.sha256()
+    for t in texts:
+        h.update(t.encode("utf-8"))
+        h.update(b"\x00")  # separator so ["ab","c"] != ["a","bc"]
+    return f"embed_{h.hexdigest()}_{model_name}"
+
+
+def embed_texts(
+    texts: list[str],
+    model_name: str = "all-MiniLM-L6-v2",
+    use_cache: bool = True,
+) -> np.ndarray:
+    """Embed a list of texts, returning (n, dim) array.
+
+    When use_cache is True (the default), embeddings are persisted to
+    ~/.cache/cane-personality/ keyed by a SHA-256 hash of the input texts
+    and model name. Subsequent calls with identical inputs skip the model
+    entirely and load from disk.
+    """
+    # Try loading from cache
+    if use_cache:
+        cache_dir = _embedding_cache_dir()
+        cache_file = cache_dir / (_embedding_cache_key(texts, model_name) + ".npy")
+        try:
+            if cache_file.exists():
+                cached = np.load(str(cache_file))
+                if cached.shape[0] == len(texts):
+                    return cached
+        except Exception:
+            pass  # cache miss or corrupt file, fall through to compute
+
     try:
         from sentence_transformers import SentenceTransformer
     except ImportError:
@@ -34,7 +75,16 @@ def embed_texts(texts: list[str], model_name: str = "all-MiniLM-L6-v2") -> np.nd
         )
     model = SentenceTransformer(model_name)
     embeddings = model.encode(texts, show_progress_bar=False, normalize_embeddings=True)
-    return np.array(embeddings)
+    result = np.array(embeddings)
+
+    # Persist to cache
+    if use_cache:
+        try:
+            np.save(str(cache_file), result)
+        except Exception:
+            pass  # non-fatal: caching is best-effort
+
+    return result
 
 
 def project_umap(embeddings: np.ndarray, n_components: int = 2) -> np.ndarray:
@@ -149,6 +199,11 @@ def extract_contrastive_pairs(
         if r.score <= low_threshold and r.traits.get("hedging", 50) < 40
     ]
 
+    all_trait_keys = [
+        "overconfidence", "calibration", "hedging",
+        "verbosity", "groundedness", "completeness",
+    ]
+
     pairs = []
     for wrong in confident_wrong:
         best = None
@@ -156,29 +211,28 @@ def extract_contrastive_pairs(
             if right.question == wrong.question:
                 best = right
                 break
-        if best is None and confident_right:
-            best = confident_right[0]
+        if best is None:
+            continue  # No valid match, skip rather than pairing unrelated questions
 
-        if best:
-            # Determine trait tag from the wrong result's worst trait
-            worst_trait = ""
-            if wrong.traits:
-                worst_trait = max(
-                    ["overconfidence", "hedging", "verbosity"],
-                    key=lambda t: wrong.traits.get(t, 0),
-                    default="",
-                )
+        # Determine trait tag from the wrong result's worst trait
+        worst_trait = ""
+        if wrong.traits:
+            worst_trait = max(
+                all_trait_keys,
+                key=lambda t: wrong.traits.get(t, 0),
+                default="",
+            )
 
-            pairs.append(ContrastivePair(
-                question=wrong.question,
-                confident_right=best.agent_answer,
-                confident_wrong=wrong.agent_answer,
-                right_score=best.score,
-                wrong_score=wrong.score,
-                right_embedding=best.embedding,
-                wrong_embedding=wrong.embedding,
-                trait_tag=worst_trait,
-            ))
+        pairs.append(ContrastivePair(
+            question=wrong.question,
+            confident_right=best.agent_answer,
+            confident_wrong=wrong.agent_answer,
+            right_score=best.score,
+            wrong_score=wrong.score,
+            right_embedding=best.embedding,
+            wrong_embedding=wrong.embedding,
+            trait_tag=worst_trait,
+        ))
 
     return pairs
 

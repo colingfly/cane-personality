@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cane-personality"
-version = "0.1.0"
+version = "0.2.0"
 description = "Behavioral profiling benchmark for LLMs. Profile any model's personality, extract steering vectors, generate DPO training pairs."
 readme = "README.md"
 license = "MIT"
@@ -39,6 +39,7 @@ anthropic = ["anthropic>=0.39.0"]
 openai = ["openai>=1.0.0"]
 embeddings = ["sentence-transformers>=2.2.0"]
 umap = ["umap-learn>=0.5.0"]
+progress = ["tqdm>=4.64.0"]
 all = [
     "anthropic>=0.39.0",
     "openai>=1.0.0",

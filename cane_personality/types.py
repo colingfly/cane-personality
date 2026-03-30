@@ -128,6 +128,7 @@ class ProfileResult:
     contrastive_pairs: list[ContrastivePair] = field(default_factory=list)
     embedding_model: str = ""
     projection_method: str = ""
+    metadata: dict = field(default_factory=dict)
 
     def to_dict(self) -> dict:
         return {
@@ -136,6 +137,7 @@ class ProfileResult:
             "total_results": self.total_results,
             "embedding_model": self.embedding_model,
             "projection_method": self.projection_method,
+            "metadata": self.metadata,
             "personality": self.personality.to_dict() if self.personality else None,
             "clusters": self.clusters,
             "steering_vectors": [sv.to_dict() for sv in self.steering_vectors],

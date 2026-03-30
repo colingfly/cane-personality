@@ -1,5 +1,7 @@
 """traits.py -- Personality trait definitions and scoring."""
 
+import re
+
 
 PERSONALITY_TRAITS = {
     "overconfidence": {
@@ -42,11 +44,16 @@ HEDGE_MARKERS = [
     "it depends", "not entirely", "somewhat", "arguably",
 ]
 
+# Pre-compile word-boundary regex patterns for accurate hedging detection.
+# Using \b avoids false positives from substring matches (e.g. "general" in
+# "generally" or "like" in "likely").
+_HEDGE_PATTERNS = [re.compile(r"\b" + re.escape(m) + r"\b") for m in HEDGE_MARKERS]
+
 
 def score_hedging(text: str) -> float:
     """Score hedging level (0=none, 100=extremely hedgy)."""
     text_lower = text.lower()
-    count = sum(1 for marker in HEDGE_MARKERS if marker in text_lower)
+    count = sum(1 for pat in _HEDGE_PATTERNS if pat.search(text_lower))
     words = len(text.split())
     if words == 0:
         return 0.0

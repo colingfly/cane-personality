@@ -823,6 +823,59 @@ class TestJudgeParsing:
         assert j.model == "gpt-4"
         assert j.api_key == "fake"
 
+    def test_json_with_trailing_reasoning(self):
+        """Test that _extract_first_json correctly parses JSON followed by reasoning text."""
+        from cane_personality.judge import _extract_first_json
+        raw = '{"accuracy": 95, "completeness": 90, "hallucination": 100, "status": "pass", "overall_score": 95}\n\nReasoning:\n- Accuracy is high because...'
+        result = _extract_first_json(raw)
+        assert result is not None
+        assert result["accuracy"] == 95
+        assert result["completeness"] == 90
+        assert result["hallucination"] == 100
+        assert result["status"] == "pass"
+        assert result["overall_score"] == 95
+
+    def test_json_with_trailing_comma(self):
+        """Test handling of trailing text after valid JSON."""
+        from cane_personality.judge import _extract_first_json
+        raw = '{"accuracy": 80, "completeness": 75, "hallucination": 85, "status": "pass", "overall_score": 80}, and some trailing text'
+        result = _extract_first_json(raw)
+        assert result is not None
+        assert result["accuracy"] == 80
+        assert result["overall_score"] == 80
+
+    def test_completely_invalid_response(self):
+        """_extract_first_json returns None for text with no JSON at all."""
+        from cane_personality.judge import _extract_first_json
+        result = _extract_first_json("This response has no JSON at all")
+        assert result is None
+
+    def test_scores_outside_range(self):
+        """_clamp_scores clamps negative values to 0 and values over 100 to 100."""
+        from cane_personality.judge import _clamp_scores
+        data = {"accuracy": -10, "completeness": 150, "hallucination": 50, "overall_score": 200}
+        clamped = _clamp_scores(data)
+        assert clamped["accuracy"] == 0
+        assert clamped["completeness"] == 100
+        assert clamped["hallucination"] == 50
+        assert clamped["overall_score"] == 100
+
+    def test_non_numeric_scores(self):
+        """_clamp_scores replaces non-numeric values like 'high' with 50."""
+        from cane_personality.judge import _clamp_scores
+        data = {"accuracy": "high", "completeness": "low", "hallucination": 80, "overall_score": "medium"}
+        clamped = _clamp_scores(data)
+        assert clamped["accuracy"] == 50
+        assert clamped["completeness"] == 50
+        assert clamped["hallucination"] == 80
+        assert clamped["overall_score"] == 50
+
+    def test_empty_response(self):
+        """_extract_first_json returns None for empty string."""
+        from cane_personality.judge import _extract_first_json
+        result = _extract_first_json("")
+        assert result is None
+
     def test_status_derivation(self):
         """Verify status derivation logic from judge.py."""
         overall_score = 82

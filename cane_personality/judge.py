@@ -5,7 +5,75 @@ Supports Anthropic (default), OpenAI, and Ollama providers.
 """
 
 import json
+import logging
 import os
+
+log = logging.getLogger("cane_personality")
+
+
+def _extract_first_json(text: str) -> dict | None:
+    """Extract the first valid JSON object from a string.
+
+    Handles cases where the judge returns JSON followed by explanation text,
+    JSON wrapped in markdown fences, or JSON embedded in prose. Uses brace
+    depth tracking with string awareness to find balanced objects.
+
+    Returns None if no valid JSON object is found.
+    """
+    # Strip markdown fences first
+    cleaned = text.strip()
+    if cleaned.startswith("```"):
+        cleaned = cleaned.split("\n", 1)[-1].rsplit("```", 1)[0].strip()
+
+    # Try direct parse first (fastest path)
+    try:
+        return json.loads(cleaned)
+    except (json.JSONDecodeError, ValueError):
+        pass
+
+    # Walk the string looking for balanced braces
+    i = text.find("{")
+    while i != -1 and i < len(text):
+        depth = 0
+        in_string = False
+        escape_next = False
+        for j in range(i, len(text)):
+            ch = text[j]
+            if escape_next:
+                escape_next = False
+                continue
+            if ch == "\\":
+                escape_next = True
+                continue
+            if ch == '"' and not escape_next:
+                in_string = not in_string
+                continue
+            if in_string:
+                continue
+            if ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    candidate = text[i:j + 1]
+                    try:
+                        return json.loads(candidate)
+                    except (json.JSONDecodeError, ValueError):
+                        break
+        i = text.find("{", i + 1)
+
+    return None
+
+
+def _clamp_scores(result: dict) -> dict:
+    """Clamp all numeric score values to 0-100 range."""
+    for key in ("accuracy", "completeness", "hallucination", "overall_score"):
+        if key in result:
+            try:
+                result[key] = max(0, min(100, float(result[key])))
+            except (TypeError, ValueError):
+                result[key] = 50
+    return result
 
 JUDGE_PROMPT = """You are an expert evaluator. Score the following AI response against the expected answer.
 
@@ -78,10 +146,12 @@ class Judge:
         model: str = None,
         api_key: str = None,
         base_url: str = None,
+        prompt_template: str = None,
     ):
         self.provider = provider.lower()
         self.model = model or self.DEFAULT_MODELS.get(self.provider, "claude-haiku-4-5-20241022")
         self.base_url = base_url
+        self.prompt_template = prompt_template or JUDGE_PROMPT
 
         # Resolve API key
         if api_key:
@@ -106,7 +176,7 @@ class Judge:
         Returns:
             Dict with keys: accuracy, completeness, hallucination, status, overall_score
         """
-        prompt = JUDGE_PROMPT.format(
+        prompt = self.prompt_template.format(
             question=question,
             expected_answer=expected_answer,
             agent_answer=agent_answer,
@@ -118,27 +188,20 @@ class Judge:
             raw = _call_openai(prompt, self.model, self.api_key, self.base_url)
 
         # Parse JSON from response
-        try:
-            # Handle potential markdown wrapping
-            text = raw.strip()
-            if text.startswith("```"):
-                text = text.split("\n", 1)[1].rsplit("```", 1)[0].strip()
-            result = json.loads(text)
-        except json.JSONDecodeError:
-            # Fallback: try to find JSON in response
-            import re
-            match = re.search(r'\{[^}]+\}', raw)
-            if match:
-                result = json.loads(match.group())
-            else:
-                result = {
-                    "accuracy": 50, "completeness": 50, "hallucination": 50,
-                    "status": "warn", "overall_score": 50,
-                }
+        result = _extract_first_json(raw)
+        if result is None:
+            log.warning("Could not parse judge response, using defaults: %s", raw[:120])
+            result = {
+                "accuracy": 50, "completeness": 50, "hallucination": 50,
+                "status": "warn", "overall_score": 50,
+            }
 
-        # Ensure all keys exist
-        for key in ["accuracy", "completeness", "hallucination"]:
+        # Ensure all keys exist with defaults
+        for key in ("accuracy", "completeness", "hallucination"):
             result.setdefault(key, 50)
+
+        # Clamp scores to valid range
+        result = _clamp_scores(result)
 
         if "overall_score" not in result:
             result["overall_score"] = round(
