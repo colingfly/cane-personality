@@ -22,9 +22,9 @@ BG_COLOR = '#0D1117'
 fig, ax = plt.subplots(figsize=(12, 6), facecolor=BG_COLOR)
 ax.set_facecolor(BG_COLOR)
 
-models = ['Qwen-2.5-72B', 'OLMo-2-32B', 'DeepSeek-V3', 'INTELLECT-3', 'Qwen-2.5-7B']
-avgs = [90.7, 90.5, 90.0, 88.2, 87.5]
-fails = [10, 11, 19, 22, 16]
+models = ['Trinity-Large-Thinking', 'Qwen-2.5-72B', 'OLMo-2-32B', 'DeepSeek-V3', 'INTELLECT-3', 'Qwen-2.5-7B']
+avgs = [91.3, 90.7, 90.5, 90.0, 88.2, 87.5]
+fails = [13, 10, 11, 19, 22, 16]
 
 colors = [CANE_GREEN if a >= 90 else CANE_ORANGE if a >= 88 else CANE_RED for a in avgs]
 bars = ax.barh(range(len(models)), avgs, color=colors, height=0.6, alpha=0.9, edgecolor='white', linewidth=0.5)
@@ -44,7 +44,7 @@ ax.spines['right'].set_visible(False)
 ax.spines['bottom'].set_color('gray')
 ax.spines['left'].set_color('gray')
 ax.tick_params(colors='gray')
-ax.text(0.99, 0.02, 'cane-personality v0.1.0 | pip install cane-personality', transform=ax.transAxes, fontsize=8, color='gray', ha='right', style='italic')
+ax.text(0.99, 0.02, 'cane-personality v0.2.0 | pip install cane-personality', transform=ax.transAxes, fontsize=8, color='gray', ha='right', style='italic')
 plt.tight_layout()
 plt.savefig('charts/leaderboard.png', dpi=200, bbox_inches='tight', facecolor=BG_COLOR)
 plt.close()
@@ -101,13 +101,15 @@ fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(projection='polar'), face
 ax.set_facecolor(BG_COLOR)
 
 trait_names = ['Low\nOverconfidence', 'Calibration', 'Low\nHedging', 'Verbosity', 'Groundedness', 'Completeness']
+CANE_CYAN = '#00E5FF'
 model_data = {
-    'INTELLECT-3':  [100-6.8, 89.3, 100-7.5, 97.3, 88.4, 86.8],
-    'DeepSeek-V3':  [100-6.2, 90.9, 100-7.4, 99.0, 90.2, 88.9],
+    'Trinity-Large-Thinking': [100-4.6, 92.4, 100-8.5, 93.2, 91.5, 89.5],
     'Qwen-2.5-72B': [100-3.8, 92.8, 100-9.4, 93.9, 90.8, 86.9],
     'OLMo-2-32B':   [100-3.3, 92.4, 100-8.5, 95.9, 90.6, 86.9],
+    'DeepSeek-V3':  [100-6.2, 90.9, 100-7.4, 99.0, 90.2, 88.9],
+    'INTELLECT-3':  [100-6.8, 89.3, 100-7.5, 97.3, 88.4, 86.8],
 }
-colors_radar = [CANE_ORANGE, CANE_BLUE, CANE_GREEN, CANE_PURPLE]
+colors_radar = [CANE_CYAN, CANE_GREEN, CANE_PURPLE, CANE_BLUE, CANE_ORANGE]
 angles = np.linspace(0, 2*np.pi, len(trait_names), endpoint=False).tolist()
 angles += angles[:1]
 

@@ -5,17 +5,17 @@ Behavioral profiling benchmark for LLMs. Profile any model's personality, extrac
 [![PyPI](https://img.shields.io/pypi/v/cane-personality)](https://pypi.org/project/cane-personality/)
 
 ```
-                   Qwen-2.5-72B  OLMo-2-32B  DeepSeek-V3  INTELLECT-3  Qwen-2.5-7B
-Overall Score           90.7        90.5        90.0         88.2         87.5
-Overconfidence           3.8         3.3         6.2          6.8          6.0
-Calibration             92.8        92.4        90.9         89.3         89.3
-Verbosity               93.9        95.9        99.0         97.3         94.8
-Hedging                  9.4         8.5         7.4          7.5         11.1
-Groundedness            90.8        90.6        90.2         88.4         87.5
-Completeness            86.9        86.9        88.9         86.8         83.9
+                   Trinity-LT  Qwen-2.5-72B  OLMo-2-32B  DeepSeek-V3  INTELLECT-3  Qwen-2.5-7B
+Overall Score           91.3        90.7        90.5        90.0         88.2         87.5
+Overconfidence           4.6         3.8         3.3         6.2          6.8          6.0
+Calibration             92.4        92.8        92.4        90.9         89.3         89.3
+Verbosity               93.2        93.9        95.9        99.0         97.3         94.8
+Hedging                  8.5         9.4         8.5         7.4          7.5         11.1
+Groundedness            91.5        90.8        90.6        90.2         88.4         87.5
+Completeness            89.5        86.9        86.9        88.9         86.8         83.9
 
-Fails (out of 300)        10          11          19           22           16
-DPO Pairs Generated       11          11          17           21           22
+Fails (out of 300)        13          10          11          19           22           16
+DPO Pairs Generated       13          11          11          17           21           22
 ```
 
 **DPO Training Results (Qwen-2.5-7B):**
