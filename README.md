@@ -18,12 +18,6 @@ Fails (out of 300)        13          10          11          19           22   
 DPO Pairs Generated       13          11          11          17           21           22
 ```
 
-**DPO Training Results (Qwen-2.5-7B):**
-22 auto-generated DPO pairs, one round of QLoRA training on an RTX 4070 laptop GPU (2h 11m):
-- Fabrication fails: 16 to 7 (down 56%)
-- 9 out of 16 groundedness failures fixed on unseen questions
-- Model learned epistemic humility from 22 examples
-
 ## New in v0.2.0
 
 - **Checkpoint/resume**: interrupted runs pick up where they left off
